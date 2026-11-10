@@ -49,7 +49,6 @@ jobs:
 
           source_names = [
               "hero-v3.svg",
-              "contributions-v3.svg",
               "activity-v3.svg",
               "area-ai-v3.svg",
               "area-data-v3.svg",

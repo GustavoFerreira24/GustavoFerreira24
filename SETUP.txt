@@ -1,32 +1,21 @@
-V7 — AUTO REFRESH + CACHE-PROOF
+V8 — CLEANER PROFILE
 
-This package includes the three files that must stay in sync:
+Changes:
+- Removed the separate contribution-calendar card.
+- Kept the monthly activity/statistics card.
+- Made "OPEN TO A CURRICULAR INTERNSHIP · 2027" larger and more prominent.
+- Replaced "Cloud & Systems" with "Projects".
+- Projects card now points to your repositories page.
+- Projects subtitle: Personal · academic · hackathons.
+- Workflow still runs automatically on every push to main, daily, and manually.
+- Unique run-specific SVG filenames remain enabled to avoid GitHub image caching.
+
+Replace these three files together:
 - README.md
 - scripts/render_profile.py
 - .github/workflows/update-profile.yml
 
-Current design choices included:
-- "Projects over streaks."
-- 392/395/etc. contributions + active days only
-- Cloud & Systems uses "EXPLORE"
-- Larger text in the Selected projects cards
-- Selected projects section
-- GitHub contribution/activity cards
-
-Workflow behavior:
-- Runs automatically on every push/commit to main in THIS profile repository.
-- Runs once per day as a fallback.
-- Can still be run manually.
-- Ignores github-actions[bot] pushes to prevent an infinite loop.
-- Publishes SVGs with a brand-new filename on every run, bypassing GitHub's image cache.
-
 Recommended commit message:
-fix: auto-refresh profile cards on every push
+style: simplify profile and highlight projects
 
-IMPORTANT:
-Replace all three files above together. Do not keep an older render_profile.py.
-
-After pushing the commit, you do NOT need to press "Run workflow":
-the push itself will trigger the workflow automatically.
-
-If you make a normal commit to this profile repo later, it will refresh again.
+After pushing, the workflow should run automatically.

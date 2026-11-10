@@ -133,8 +133,8 @@ def hero():
 <text x="42" y="224" fill="{MUTED}" font-size="17" class="sans rise" style="animation-delay:.32s">Building practical systems across AI, data and cloud -</text>
 <text x="42" y="248" fill="{MUTED}" font-size="17" class="sans rise" style="animation-delay:.38s">one project at a time.</text>
 
-<circle cx="44" cy="276" r="5" fill="{GREEN}" class="pulse"/>
-<text x="58" y="281" fill="{MUTED}" font-size="12" class="mono fade" style="animation-delay:.48s">OPEN TO A CURRICULAR INTERNSHIP · 2027</text>
+<circle cx="44" cy="274" r="6" fill="{GREEN}" class="pulse"/>
+<text x="60" y="280" fill="{INK}" font-size="16" font-weight="700" letter-spacing=".6" class="mono fade" style="animation-delay:.48s">OPEN TO A CURRICULAR INTERNSHIP · 2027</text>
 
 {''.join(network)}
 <text x="688" y="258" fill="{INK}" opacity=".58" font-size="12" class="mono fade" style="animation-delay:.62s">AI // DATA // CLOUD</text>
@@ -279,7 +279,7 @@ def main():
 
     area_card("area-ai-v3.svg","EXPLORE","AI Engineering","RAG · ML · intelligent systems",BLUE,"#FFFFFF")
     area_card("area-data-v3.svg","BUILD","Data Engineering","Pipelines · SQL · analytics",RED,"#FFFFFF")
-    area_card("area-systems-v3.svg","EXPLORE","Cloud & Systems","Networking · infra · automation",YELLOW,INK)
+    area_card("area-systems-v3.svg","SHIP","Projects","Personal · academic · hackathons",YELLOW,INK)
 
     project_card("project-rag-v3.svg","CCNA AI Assistant","RAG assistant grounded in","CCNA study materials","Python · RAG · Embeddings",BLUE)
     project_card("project-weather-v3.svg","Weather Data Pipeline","API ingestion → validation →","Parquet → DuckDB analytics","Python · SQL · DuckDB",GREEN)

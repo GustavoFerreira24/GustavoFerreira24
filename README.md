@@ -4,9 +4,6 @@
 
 <br>
 
-<img src="./cards/contributions-v3.svg" width="100%" alt="GitHub contribution graph" />
-
-<br>
 
 <img src="./cards/activity-v3.svg" width="100%" alt="GitHub activity summary" />
 
@@ -14,7 +11,7 @@
 
 <a href="https://github.com/GustavoFerreira24/ccna-ai-assistant"><img src="./cards/area-ai-v3.svg" width="32.5%" alt="AI Engineering" /></a>
 <a href="https://github.com/GustavoFerreira24/weather-data-pipeline"><img src="./cards/area-data-v3.svg" width="32.5%" alt="Data Engineering" /></a>
-<a href="https://github.com/GustavoFerreira24/airport-network-infrastructure"><img src="./cards/area-systems-v3.svg" width="32.5%" alt="Cloud and Systems" /></a>
+<a href="https://github.com/GustavoFerreira24?tab=repositories"><img src="./cards/area-systems-v3.svg" width="32.5%" alt="Projects" /></a>
 
 ## Selected projects
 
