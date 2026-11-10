@@ -2,18 +2,52 @@
 @keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
 @keyframes fade{from{opacity:0}to{opacity:1}}
 @keyframes grow{from{transform:scaleY(0)}to{transform:scaleY(1)}}
-@keyframes pop{0%{opacity:0;transform:scale(.55)}75%{opacity:1;transform:scale(1.05)}100%{opacity:1;transform:none}}
+@keyframes pop{0%{opacity:0;transform:scale(.3)}70%{opacity:1;transform:scale(1.15)}100%{opacity:1;transform:none}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
 @keyframes nudge{0%,100%{transform:none}50%{transform:translateX(4px)}}
+@keyframes tilein{
+  0%{opacity:0;transform:translateY(70px) scale(.72) rotate(-5deg)}
+  55%{opacity:1;transform:translateY(-8px) scale(1.035) rotate(1.2deg)}
+  78%{transform:translateY(2px) scale(.99) rotate(-.35deg)}
+  100%{opacity:1;transform:none}
+}
+@keyframes slidein{from{opacity:0;transform:translateX(-22px)}to{opacity:1;transform:none}}
+@keyframes arrowin{
+  0%{opacity:0;transform:translateX(-24px)}
+  65%{opacity:1;transform:translateX(5px)}
+  100%{opacity:1;transform:none}
+}
+@keyframes sheen{
+  0%{transform:translateX(-290px) skewX(-20deg)}
+  24%,100%{transform:translateX(430px) skewX(-20deg)}
+}
+@keyframes ring{0%{opacity:.55;transform:scale(.2)}100%{opacity:0;transform:scale(2.15)}}
+@keyframes draw{from{stroke-dashoffset:120}to{stroke-dashoffset:0}}
+
 .r{opacity:0;animation:rise .8s cubic-bezier(.2,.7,.2,1) both;transform-box:fill-box}
 .f{opacity:0;animation:fade .9s ease-out both}
 .g{transform-box:fill-box;transform-origin:bottom;transform:scaleY(0);animation:grow .8s cubic-bezier(.2,.7,.2,1) both}
 .p{opacity:0;transform-box:fill-box;transform-origin:center;animation:pop .4s ease-out both}
+.live{animation:pulse 1.7s ease-in-out infinite}
 .n{transform-box:fill-box;animation:nudge 1.8s ease-in-out infinite}
-@media (prefers-reduced-motion: reduce){.r,.f,.g,.p,.n{animation:none!important;opacity:1!important;transform:none!important}}
+.ti{opacity:0;transform-box:fill-box;transform-origin:50% 60%;animation:tilein 1.0s cubic-bezier(.2,.8,.2,1) both}
+.sl{opacity:0;transform-box:fill-box;animation:slidein .62s cubic-bezier(.2,.7,.2,1) both}
+.ai{opacity:0;transform-box:fill-box;animation:arrowin .7s cubic-bezier(.2,.7,.2,1) both}
+.sh{animation:sheen 5.3s ease-in-out infinite}
+.rg{opacity:0;transform-box:fill-box;transform-origin:center;animation:ring 1.1s ease-out both}
+.rc{opacity:0;transform-box:fill-box;animation:slidein .72s cubic-bezier(.2,.7,.2,1) both}
+.edge{stroke-dasharray:120;stroke-dashoffset:120;animation:draw .9s ease forwards}
+
+@media (prefers-reduced-motion: reduce){
+  .r,.f,.g,.p,.live,.n,.ti,.sl,.ai,.rg,.rc,.edge{
+    animation:none!important;opacity:1!important;transform:none!important;stroke-dashoffset:0!important
+  }
+  .sh{display:none!important}
+}
 </style>
 <rect width="285.3333333333333" height="190" rx="14" fill="#fbfaf6"/>
-<g class="r" style="animation-delay:0.35s">
-  <rect x="24" y="28" width="8" height="8" rx="2" fill="#315BFF"/>
+<g class="rc" style="animation-delay:0.35s">
+  <rect class="p" style="animation-delay:0.52s" x="24" y="28" width="8" height="8" rx="2" fill="#315BFF"/>
   <text x="40" y="37" font-family="'SFMono-Regular', Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="10.5" letter-spacing=".8" fill="#77736b">CURRENT PROJECT</text>
   <text x="24" y="75" font-family="'Avenir Next', Avenir, 'Segoe UI', Helvetica, Arial, sans-serif" font-weight="700" font-size="19" fill="#111111">CCNA AI Assistant</text>
   <text x="24" y="107" font-family="'Avenir Next', Avenir, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#44413c">Study assistant that retrieves</text><text x="24" y="127" font-family="'Avenir Next', Avenir, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#44413c">grounded answers from CCNA course</text><text x="24" y="147" font-family="'Avenir Next', Avenir, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#44413c">materials.</text>
