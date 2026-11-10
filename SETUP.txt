@@ -14,3 +14,14 @@ README.md and workflow can stay as they are from editorial-v2.
 
 Recommended commit:
 style: refine profile typography and project cards
+
+
+V4 animation polish:
+- Fixed the activity-card text overflow.
+- Added subtle animated shine to the surname.
+- Network edges draw in and nodes pop into place.
+- Internship/status indicators pulse.
+- Monthly bars grow sequentially.
+- Colour cards use a bounce/rotate entrance, sliding labels/arrows, a soft sheen and ring pulse.
+- Current-project cards slide in sequentially and their status markers pop in.
+- prefers-reduced-motion is still respected.
