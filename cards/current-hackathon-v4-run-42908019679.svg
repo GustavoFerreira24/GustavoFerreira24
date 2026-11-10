@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="293.333" height="188" viewBox="0 0 293.333 188" role="img" aria-label="UPCOMING HACKATHON: Smart Aveiro"><title>UPCOMING HACKATHON: Smart Aveiro</title><style>
+@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@keyframes grow{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+@keyframes pop{0%{opacity:0;transform:scale(.55)}75%{opacity:1;transform:scale(1.05)}100%{opacity:1;transform:none}}
+@keyframes nudge{0%,100%{transform:none}50%{transform:translateX(4px)}}
+.r{opacity:0;animation:rise .8s cubic-bezier(.2,.7,.2,1) both;transform-box:fill-box}
+.f{opacity:0;animation:fade .9s ease-out both}
+.g{transform-box:fill-box;transform-origin:bottom;transform:scaleY(0);animation:grow .8s cubic-bezier(.2,.7,.2,1) both}
+.p{opacity:0;transform-box:fill-box;transform-origin:center;animation:pop .4s ease-out both}
+.n{transform-box:fill-box;animation:nudge 1.8s ease-in-out infinite}
+@media (prefers-reduced-motion: reduce){.r,.f,.g,.p,.n{animation:none!important;opacity:1!important;transform:none!important}}
+</style><g transform="translate(8.000 0)">
+<rect width="285.3333333333333" height="176" rx="14" fill="#fbfaf6"/>
+<g class="r" style="animation-delay:0.55s">
+  <rect x="24" y="28" width="8" height="8" rx="2" fill="#FFD13B"/>
+  <text x="40" y="37" font-family="'SFMono-Regular', Consolas, 'Liberation Mono', monospace" font-size="10.5" letter-spacing=".8" fill="#77736b">UPCOMING HACKATHON</text>
+  <text x="24" y="75" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-weight="700" font-size="18" fill="#111111">Smart Aveiro</text>
+  <text x="24" y="105" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13.5" fill="#44413c">Aveiro Tech City Hackathon</text><text x="24" y="125" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13.5" fill="#44413c">challenge focused on turning urban</text><text x="24" y="145" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="13.5" fill="#44413c">data into actionable insights.</text>
+  <text x="24" y="156" font-family="'SFMono-Regular', Consolas, 'Liberation Mono', monospace" font-size="11.5" fill="#77736b">Data · Analytics · Hackathon</text>
+</g>
+</g></svg>
