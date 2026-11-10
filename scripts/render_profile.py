@@ -139,17 +139,17 @@ def hero():
 {''.join(network)}
 <text x="688" y="258" fill="{INK}" opacity=".58" font-size="12" class="mono fade" style="animation-delay:.62s">AI // DATA // CLOUD</text>
 '''
-    save("hero.svg", wrap_svg(900,300,body))
+    save("hero-v3.svg", wrap_svg(900,300,body))
 
 def contribution_card(data):
     if not data:
         body = f'''
 <rect width="900" height="210" rx="22" fill="{PAPER2}"/>
 <rect x="1" y="1" width="898" height="208" rx="21" fill="none" stroke="{GRID}"/>
-<text x="38" y="50" fill="{INK}" font-size="30" class="serif rise">Every commit, <tspan fill="{BLUE}" font-style="italic">a little further.</tspan></text>
+<text x="38" y="50" fill="{INK}" font-size="30" class="serif rise">Learning in public, <tspan fill="{BLUE}" font-style="italic">building for real.</tspan></text>
 <text x="38" y="95" fill="{MUTED}" font-size="13" class="mono fade" style="animation-delay:.2s">Run the GitHub Action once to load live contribution data.</text>
 '''
-        save("contributions.svg", wrap_svg(900,210,body))
+        save("contributions-v3.svg", wrap_svg(900,210,body))
         return
 
     days = data["days"]
@@ -180,54 +180,68 @@ def contribution_card(data):
     body=f'''
 <rect width="900" height="210" rx="22" fill="{PAPER2}"/>
 <rect x="1" y="1" width="898" height="208" rx="21" fill="none" stroke="{GRID}"/>
-<text x="38" y="50" fill="{INK}" font-size="30" class="serif rise">Every commit, <tspan fill="{BLUE}" font-style="italic">a little further.</tspan></text>
+<text x="38" y="50" fill="{INK}" font-size="30" class="serif rise">Learning in public, <tspan fill="{BLUE}" font-style="italic">building for real.</tspan></text>
 <text x="862" y="48" text-anchor="end" fill="{MUTED}" font-size="10" letter-spacing="1" class="mono fade">REFRESHED DAILY</text>
 {''.join(cells)}
 '''
-    save("contributions.svg", wrap_svg(900,210,body))
+    save("contributions-v3.svg", wrap_svg(900,210,body))
 
 def activity_card(s):
     if not s:
-        body=f'''
+        body=f"""
 <rect width="900" height="300" rx="22" fill="{PAPER}"/>
 <rect x="1" y="1" width="898" height="298" rx="21" fill="none" stroke="{GRID}"/>
-<text x="38" y="52" fill="{MUTED}" font-size="11" letter-spacing="1.2" class="mono">THE LAST 12 MONTHS ON GITHUB</text>
-<text x="38" y="112" fill="{INK}" font-size="42" class="serif">Syncing activity...</text>
+<text x="38" y="48" fill="{MUTED}" font-size="11" letter-spacing="1.2" class="mono">THE LAST 12 MONTHS ON GITHUB</text>
+<text x="38" y="110" fill="{INK}" font-size="42" class="serif">Syncing activity...</text>
 <text x="38" y="145" fill="{MUTED}" font-size="13" class="sans">Run the workflow once and this card will fill with your real GitHub data.</text>
-'''
-        save("activity.svg", wrap_svg(900,300,body))
+"""
+        save("activity-v3.svg", wrap_svg(900,300,body))
         return
 
-    months=s["months"]; maxv=max((v for _,v in months),default=1) or 1
+    months=s["months"]
+    maxv=max((v for _,v in months),default=1) or 1
     chart=[]
-    x0=40; gap=52; bw=30; base=257
-    for i,(m,v) in enumerate(months):
-        h=95*v/maxv if v else 3
-        x=x0+i*gap; y=base-h
-        label=dt.datetime.strptime(m,"%Y-%m").strftime("%b")
-        chart.append(f'<rect x="{x}" y="{y:.1f}" width="{bw}" height="{h:.1f}" rx="4" fill="{INK if i != len(months)-1 else BLUE}" class="bar" style="animation-delay:{.18+i*.035:.2f}s"/>')
-        chart.append(f'<text x="{x+bw/2}" y="278" text-anchor="middle" fill="{MUTED}" font-size="10" class="mono">{label}</text>')
+    x0=44
+    gap=58
+    bw=34
+    base=258
+    max_h=112
 
-    body=f'''
+    for i,(m,v) in enumerate(months):
+        h=max_h*v/maxv if v else 3
+        x=x0+i*gap
+        y=base-h
+        label=dt.datetime.strptime(m,"%Y-%m").strftime("%b")
+        fill = BLUE if i == len(months)-1 else INK
+        chart.append(
+            f'<rect x="{x}" y="{y:.1f}" width="{bw}" height="{h:.1f}" rx="4" '
+            f'fill="{fill}" class="bar" style="animation-delay:{.18+i*.035:.2f}s"/>'
+        )
+        chart.append(
+            f'<text x="{x+bw/2}" y="280" text-anchor="middle" fill="{MUTED}" '
+            f'font-size="10" class="mono">{label}</text>'
+        )
+
+    body=f"""
 <rect width="900" height="300" rx="22" fill="{PAPER}"/>
 <rect x="1" y="1" width="898" height="298" rx="21" fill="none" stroke="{GRID}"/>
+
 <text x="38" y="43" fill="{MUTED}" font-size="11" letter-spacing="1.2" class="mono fade">THE LAST 12 MONTHS ON GITHUB</text>
-<text x="38" y="103" fill="{INK}" font-size="46" class="serif rise">{s["total"]:,} contributions</text>
 
-<text x="667" y="83" fill="{INK}" font-size="30" class="serif rise" style="animation-delay:.12s">{s["streak"]} days</text>
-<text x="667" y="101" fill="{MUTED}" font-size="11" class="sans">current streak</text>
-<line x1="667" y1="118" x2="855" y2="118" stroke="{GRID}"/>
+<text x="38" y="100" fill="{INK}" font-size="46" class="serif rise">{s["total"]:,}</text>
+<text x="38" y="122" fill="{MUTED}" font-size="12" class="sans">contributions</text>
 
-<text x="667" y="153" fill="{INK}" font-size="30" class="serif rise" style="animation-delay:.18s">{s["active"]} / 365</text>
-<text x="667" y="171" fill="{MUTED}" font-size="11" class="sans">active days</text>
-<line x1="667" y1="188" x2="855" y2="188" stroke="{GRID}"/>
+<text x="260" y="100" fill="{BLUE}" font-size="46" class="serif rise" style="animation-delay:.12s">{s["active"]}</text>
+<text x="260" y="122" fill="{MUTED}" font-size="12" class="sans">active days</text>
 
-<text x="667" y="223" fill="{INK}" font-size="30" class="serif rise" style="animation-delay:.24s">{s["busiest_count"]}</text>
-<text x="667" y="241" fill="{MUTED}" font-size="11" class="sans">on the busiest day</text>
+<line x1="420" y1="73" x2="420" y2="125" stroke="{GRID}"/>
+
+<text x="452" y="91" fill="{INK}" font-size="19" class="serif rise" style="animation-delay:.18s">Consistency matters.</text>
+<text x="452" y="115" fill="{MUTED}" font-size="12" class="sans fade" style="animation-delay:.26s">The graph below shows when the work happened.</text>
 
 {''.join(chart)}
-'''
-    save("activity.svg", wrap_svg(900,300,body))
+"""
+    save("activity-v3.svg", wrap_svg(900,300,body))
 
 def area_card(filename, kicker, title, subtitle, accent, text_color="#111111"):
     body=f'''
@@ -263,13 +277,13 @@ def main():
     contribution_card(data)
     activity_card(stats(data))
 
-    area_card("area-ai.svg","EXPLORE","AI Engineering","RAG · ML · intelligent systems",BLUE,"#FFFFFF")
-    area_card("area-data.svg","BUILD","Data Engineering","Pipelines · SQL · analytics",RED,"#FFFFFF")
-    area_card("area-systems.svg","FOUNDATION","Cloud & Systems","Networking · infra · automation",YELLOW,INK)
+    area_card("area-ai-v3.svg","EXPLORE","AI Engineering","RAG · ML · intelligent systems",BLUE,"#FFFFFF")
+    area_card("area-data-v3.svg","BUILD","Data Engineering","Pipelines · SQL · analytics",RED,"#FFFFFF")
+    area_card("area-systems-v3.svg","FOUNDATION","Cloud & Systems","Networking · infra · automation",YELLOW,INK)
 
-    project_card("project-rag.svg","CCNA AI Assistant","RAG assistant grounded in","CCNA study materials","Python · RAG · Embeddings",BLUE)
-    project_card("project-weather.svg","Weather Data Pipeline","API ingestion → validation →","Parquet → DuckDB analytics","Python · SQL · DuckDB",GREEN)
-    project_card("project-bank.svg","Bank Marketing ML","Leakage-aware classification","with threshold tuning","Python · scikit-learn · Pandas",PURPLE)
+    project_card("project-rag-v3.svg","CCNA AI Assistant","RAG assistant grounded in","CCNA study materials","Python · RAG · Embeddings",BLUE)
+    project_card("project-weather-v3.svg","Weather Data Pipeline","API ingestion → validation →","Parquet → DuckDB analytics","Python · SQL · DuckDB",GREEN)
+    project_card("project-bank-v3.svg","Bank Marketing ML","Leakage-aware classification","with threshold tuning","Python · scikit-learn · Pandas",PURPLE)
 
     print("Profile cards rendered.")
 

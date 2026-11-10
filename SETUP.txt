@@ -1,22 +1,20 @@
-SETUP
+SETUP — V3
 
-Replace the contents of your current profile repo with these files.
-
-Repository:
-GustavoFerreira24/GustavoFerreira24
+Replace the current README.md, scripts/render_profile.py and .github/workflows/update-profile.yml
+with the files in this package, and add the new cards/*-v3.svg files.
 
 Recommended commit message:
-feat: redesign GitHub profile with animated portfolio cards
+feat: refine profile stats and selected projects
+
+Why the filenames changed:
+The V3 assets use new filenames (for example activity-v3.svg) to force GitHub's profile
+image cache to load the new design immediately.
 
 After pushing:
 1. Open the repository on GitHub.
 2. Go to Actions.
 3. Open "Update profile cards".
 4. Click "Run workflow".
-5. Refresh your GitHub profile after the workflow finishes.
+5. Refresh your GitHub profile.
 
 No paid API key is required.
-The workflow uses GitHub's built-in GITHUB_TOKEN.
-
-The initial activity cards intentionally show a syncing message instead of fake zero stats.
-The first successful workflow run replaces them with your real GitHub activity.
