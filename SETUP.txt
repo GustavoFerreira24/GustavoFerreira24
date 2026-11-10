@@ -1,21 +1,31 @@
-V8 — CLEANER PROFILE
+FINAL PROFILE VERSION
 
-Changes:
-- Removed the separate contribution-calendar card.
-- Kept the monthly activity/statistics card.
-- Made "OPEN TO A CURRICULAR INTERNSHIP · 2027" larger and more prominent.
-- Replaced "Cloud & Systems" with "Projects".
-- Projects card now points to your repositories page.
-- Projects subtitle: Personal · academic · hackathons.
-- Workflow still runs automatically on every push to main, daily, and manually.
-- Unique run-specific SVG filenames remain enabled to avoid GitHub image caching.
+Structure:
+1. Larger hero banner
+2. GitHub activity card
+3. Three story cards:
+   - BUILD — Academic Projects
+   - EXPLORE — Personal Projects
+   - FOCUS — AI · Data · Cloud
+4. What I'm building:
+   - CCNA AI Assistant
+   - LaPrizza
+   - Hackathon should be added here only when it actually starts
+5. LinkedIn / Email
 
-Replace these three files together:
+Workflow:
+- Automatically runs on every push to main
+- Runs daily as a fallback
+- Can still be triggered manually
+- Ignores github-actions[bot] pushes to prevent loops
+- Uses unique filenames for fresh SVGs and avoids GitHub image cache issues
+
+Replace together:
 - README.md
 - scripts/render_profile.py
 - .github/workflows/update-profile.yml
 
 Recommended commit message:
-style: simplify profile and highlight projects
+feat: finalize GitHub profile structure
 
-After pushing, the workflow should run automatically.
+After you push, the workflow should run automatically.

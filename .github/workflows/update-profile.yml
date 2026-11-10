@@ -54,8 +54,7 @@ jobs:
               "area-data-v3.svg",
               "area-systems-v3.svg",
               "project-rag-v3.svg",
-              "project-weather-v3.svg",
-              "project-bank-v3.svg",
+              "project-laprizza-v3.svg",
           ]
 
           # Remove the previous run-specific copies so the repo stays clean.

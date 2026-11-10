@@ -110,7 +110,7 @@ def stats(data):
     }
 
 def hero():
-    pts = [(690,70),(770,92),(835,58),(728,138),(812,160),(865,122),(748,204),(842,214)]
+    pts = [(690,85),(770,110),(835,72),(728,165),(812,190),(865,145),(748,240),(842,252)]
     edges = [(0,1),(1,2),(0,3),(1,3),(1,5),(2,5),(3,4),(4,5),(3,6),(4,6),(4,7),(5,7)]
     network = []
     for i,(a,b) in enumerate(edges):
@@ -121,23 +121,23 @@ def hero():
         network.append(f'<circle cx="{x}" cy="{y}" r="{6 if i in (1,4) else 4}" fill="{col}" class="pop" style="animation-delay:{0.25+i*.045:.2f}s"/>')
 
     body = f'''
-<rect width="900" height="300" rx="22" fill="{PAPER}"/>
-<rect x="1" y="1" width="898" height="298" rx="21" fill="none" stroke="{GRID}"/>
+<rect width="900" height="360" rx="22" fill="{PAPER}"/>
+<rect x="1" y="1" width="898" height="358" rx="21" fill="none" stroke="{GRID}"/>
 
 <rect x="38" y="34" width="9" height="9" fill="{BLUE}" class="pop"/>
 <text x="58" y="43" fill="{MUTED}" font-size="12" letter-spacing="1.2" class="mono fade" style="animation-delay:.08s">COMPUTER ENGINEERING @ ISEP</text>
 
-<text x="38" y="120" fill="{INK}" font-size="58" class="serif rise" style="animation-delay:.12s">Gustavo</text>
-<text x="38" y="178" fill="{INK}" font-size="65" font-style="italic" class="serif rise" style="animation-delay:.22s">Ferreira</text>
+<text x="38" y="138" fill="{INK}" font-size="68" class="serif rise" style="animation-delay:.12s">Gustavo</text>
+<text x="38" y="207" fill="{INK}" font-size="76" font-style="italic" class="serif rise" style="animation-delay:.22s">Ferreira</text>
 
-<text x="42" y="224" fill="{MUTED}" font-size="17" class="sans rise" style="animation-delay:.32s">Building practical systems across AI, data and cloud -</text>
-<text x="42" y="248" fill="{MUTED}" font-size="17" class="sans rise" style="animation-delay:.38s">one project at a time.</text>
+<text x="42" y="260" fill="{MUTED}" font-size="17" class="sans rise" style="animation-delay:.32s">Building practical systems across AI, data and cloud -</text>
+<text x="42" y="286" fill="{MUTED}" font-size="17" class="sans rise" style="animation-delay:.38s">one project at a time.</text>
 
-<circle cx="44" cy="274" r="6" fill="{GREEN}" class="pulse"/>
-<text x="60" y="280" fill="{INK}" font-size="16" font-weight="700" letter-spacing=".6" class="mono fade" style="animation-delay:.48s">OPEN TO A CURRICULAR INTERNSHIP · 2027</text>
+<circle cx="44" cy="326" r="6" fill="{GREEN}" class="pulse"/>
+<text x="60" y="332" fill="{INK}" font-size="16" font-weight="700" letter-spacing=".6" class="mono fade" style="animation-delay:.48s">OPEN TO A CURRICULAR INTERNSHIP · 2027</text>
 
 {''.join(network)}
-<text x="688" y="258" fill="{INK}" opacity=".58" font-size="12" class="mono fade" style="animation-delay:.62s">AI // DATA // CLOUD</text>
+<text x="688" y="315" fill="{INK}" opacity=".58" font-size="12" class="mono fade" style="animation-delay:.62s">AI // DATA // CLOUD</text>
 '''
     save("hero-v3.svg", wrap_svg(900,300,body))
 
@@ -189,7 +189,7 @@ def contribution_card(data):
 def activity_card(s):
     if not s:
         body=f"""
-<rect width="900" height="300" rx="22" fill="{PAPER}"/>
+<rect width="900" height="360" rx="22" fill="{PAPER}"/>
 <rect x="1" y="1" width="898" height="298" rx="21" fill="none" stroke="{GRID}"/>
 <text x="38" y="48" fill="{MUTED}" font-size="11" letter-spacing="1.2" class="mono">THE LAST 12 MONTHS ON GITHUB</text>
 <text x="38" y="110" fill="{INK}" font-size="42" class="serif">Syncing activity...</text>
@@ -266,6 +266,20 @@ def project_card(filename, title, l1, l2, stack, accent):
 '''
     save(filename, wrap_svg(300,205,body))
 
+
+def wide_project_card(filename, title, l1, l2, stack, accent, status):
+    body=f"""
+<rect width="440" height="205" rx="20" fill="{PAPER2}"/>
+<rect x="1" y="1" width="438" height="203" rx="19" fill="none" stroke="{GRID}"/>
+<rect x="22" y="22" width="7" height="7" fill="{accent}" class="pop"/>
+<text x="39" y="30" fill="{MUTED}" font-size="10" letter-spacing=".8" class="mono">{escape(status)}</text>
+<text x="22" y="76" fill="{INK}" font-size="25" font-weight="700" class="sans rise">{escape(title)}</text>
+<text x="22" y="113" fill="{MUTED}" font-size="14" class="sans rise" style="animation-delay:.10s">{escape(l1)}</text>
+<text x="22" y="135" fill="{MUTED}" font-size="14" class="sans rise" style="animation-delay:.14s">{escape(l2)}</text>
+<text x="22" y="179" fill="{INK}" opacity=".72" font-size="12" class="mono fade" style="animation-delay:.22s">{escape(stack)}</text>
+"""
+    save(filename, wrap_svg(440,205,body))
+
 def main():
     hero()
     try:
@@ -277,13 +291,27 @@ def main():
     contribution_card(data)
     activity_card(stats(data))
 
-    area_card("area-ai-v3.svg","EXPLORE","AI Engineering","RAG · ML · intelligent systems",BLUE,"#FFFFFF")
-    area_card("area-data-v3.svg","BUILD","Data Engineering","Pipelines · SQL · analytics",RED,"#FFFFFF")
-    area_card("area-systems-v3.svg","SHIP","Projects","Personal · academic · hackathons",YELLOW,INK)
-
-    project_card("project-rag-v3.svg","CCNA AI Assistant","RAG assistant grounded in","CCNA study materials","Python · RAG · Embeddings",BLUE)
-    project_card("project-weather-v3.svg","Weather Data Pipeline","API ingestion → validation →","Parquet → DuckDB analytics","Python · SQL · DuckDB",GREEN)
-    project_card("project-bank-v3.svg","Bank Marketing ML","Leakage-aware classification","with threshold tuning","Python · scikit-learn · Pandas",PURPLE)
+    area_card("area-ai-v3.svg","BUILD","Academic Projects","ISEP · team engineering · systems",BLUE,"#FFFFFF")
+    area_card("area-data-v3.svg","EXPLORE","Personal Projects","AI · data · cloud · security",RED,"#FFFFFF")
+    area_card("area-systems-v3.svg","FOCUS","AI · Data · Cloud","Exploring through hands-on projects",YELLOW,INK)
+    wide_project_card(
+        "project-rag-v3.svg",
+        "CCNA AI Assistant",
+        "RAG assistant grounded in CCNA",
+        "study materials and retrieval",
+        "Python · RAG · Embeddings",
+        BLUE,
+        "CURRENT PROJECT",
+    )
+    wide_project_card(
+        "project-laprizza-v3.svg",
+        "LaPrizza",
+        "Restaurant management platform",
+        "built with DDD and REST APIs",
+        "C# · .NET 8 · DDD · REST",
+        GREEN,
+        "CURRENT PROJECT",
+    )
 
     print("Profile cards rendered.")
 

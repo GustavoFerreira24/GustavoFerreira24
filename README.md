@@ -1,23 +1,22 @@
 <div align="center">
-  <img src="./cards/hero-v3-run-42897199755.svg" width="100%" alt="Gustavo Ferreira — Computer Engineering student at ISEP" />
+  <img src="./cards/hero-v3.svg" width="100%" alt="Gustavo Ferreira — Computer Engineering student at ISEP" />
 </div>
 
 <br>
 
 
-<img src="./cards/activity-v3-run-42897199755.svg" width="100%" alt="GitHub activity summary" />
+<img src="./cards/activity-v3.svg" width="100%" alt="GitHub activity summary" />
 
 <br>
 
-<a href="https://github.com/GustavoFerreira24/ccna-ai-assistant"><img src="./cards/area-ai-v3-run-42897199755.svg" width="32.5%" alt="AI Engineering" /></a>
-<a href="https://github.com/GustavoFerreira24/weather-data-pipeline"><img src="./cards/area-data-v3-run-42897199755.svg" width="32.5%" alt="Data Engineering" /></a>
-<a href="https://github.com/GustavoFerreira24?tab=repositories"><img src="./cards/area-systems-v3-run-42897199755.svg" width="32.5%" alt="Projects" /></a>
+<a href="https://github.com/GustavoFerreira24?tab=repositories"><img src="./cards/area-ai-v3.svg" width="32.5%" alt="Academic Projects" /></a>
+<a href="https://github.com/GustavoFerreira24?tab=repositories"><img src="./cards/area-data-v3.svg" width="32.5%" alt="Personal Projects" /></a>
+<img src="./cards/area-systems-v3.svg" width="32.5%" alt="AI Data Cloud focus" />
 
-## Selected projects
+## What I'm building
 
-<a href="https://github.com/GustavoFerreira24/ccna-ai-assistant"><img src="./cards/project-rag-v3-run-42897199755.svg" width="32.5%" alt="CCNA AI Assistant" /></a>
-<a href="https://github.com/GustavoFerreira24/weather-data-pipeline"><img src="./cards/project-weather-v3-run-42897199755.svg" width="32.5%" alt="Weather Data Pipeline" /></a>
-<a href="https://github.com/GustavoFerreira24/bank-marketing-ml"><img src="./cards/project-bank-v3-run-42897199755.svg" width="32.5%" alt="Bank Marketing ML" /></a>
+<a href="https://github.com/GustavoFerreira24/ccna-ai-assistant"><img src="./cards/project-rag-v3.svg" width="49%" alt="CCNA AI Assistant" /></a>
+<img src="./cards/project-laprizza-v3.svg" width="49%" alt="LaPrizza" />
 
 <br><br>
 

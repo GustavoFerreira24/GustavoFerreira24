@@ -27,8 +27,8 @@
 <rect x="1" y="1" width="298" height="203" rx="19" fill="none" stroke="#D8D1C4"/>
 <rect x="20" y="22" width="7" height="7" fill="#315BFF" class="pop"/>
 <text x="37" y="30" fill="#6E6A63" font-size="10" letter-spacing=".8" class="mono">PROJECT</text>
-<text x="20" y="76" fill="#111111" font-size="23" font-weight="700" class="sans rise">CCNA AI Assistant</text>
-<text x="20" y="112" fill="#6E6A63" font-size="14" class="sans rise" style="animation-delay:.10s">RAG assistant grounded in</text>
-<text x="20" y="132" fill="#6E6A63" font-size="14" class="sans rise" style="animation-delay:.14s">CCNA study materials</text>
-<text x="20" y="178" fill="#111111" opacity=".72" font-size="12" class="mono fade" style="animation-delay:.22s">Python · RAG · Embeddings</text>
+<text x="20" y="76" fill="#111111" font-size="22" font-weight="700" class="sans rise">CCNA AI Assistant</text>
+<text x="20" y="112" fill="#6E6A63" font-size="13" class="sans rise" style="animation-delay:.10s">RAG assistant grounded in</text>
+<text x="20" y="132" fill="#6E6A63" font-size="13" class="sans rise" style="animation-delay:.14s">CCNA study materials</text>
+<text x="20" y="178" fill="#111111" opacity=".72" font-size="11" class="mono fade" style="animation-delay:.22s">Python · RAG · Embeddings</text>
 </svg>
