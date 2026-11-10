@@ -24,8 +24,8 @@
 </style>
 
 <rect width="300" height="190" rx="20" fill="#FFD13B"/>
-<text x="22" y="34" fill="#111111" font-size="10" letter-spacing="1.1" font-weight="700" class="mono fade">EXPLORE</text>
-<text x="22" y="89" fill="#111111" font-size="31" class="serif rise">Cloud &amp; Systems</text>
-<text x="22" y="125" fill="#111111" opacity=".78" font-size="13" class="sans rise" style="animation-delay:.12s">Networking · infra · automation</text>
+<text x="22" y="34" fill="#111111" font-size="10" letter-spacing="1.1" font-weight="700" class="mono fade">SHIP</text>
+<text x="22" y="89" fill="#111111" font-size="31" class="serif rise">Projects</text>
+<text x="22" y="125" fill="#111111" opacity=".78" font-size="13" class="sans rise" style="animation-delay:.12s">Personal · academic · hackathons</text>
 <text x="258" y="35" fill="#111111" font-size="19" font-weight="700" class="sans">→</text>
 </svg>
