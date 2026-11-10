@@ -197,19 +197,19 @@ def hero():
     save("hero-v4.svg", svg(W,h,body,"Gustavo Ferreira — Computer Engineering at ISEP"))
 
 def activity(s):
-    h = 272
+    h = 232
     if not s:
         body = f'''
 <rect width="{W}" height="{h}" rx="14" fill="{PAPER}"/>
-<text x="40" y="58" font-family="{MONO}" font-size="12" letter-spacing="1" fill="{MUTED}">THE LAST 12 MONTHS ON GITHUB</text>
-<text x="38" y="120" font-family="{SERIF}" font-size="52" fill="{INK}">Syncing activity...</text>
+<text x="40" y="48" font-family="{MONO}" font-size="12" letter-spacing="1" fill="{MUTED}">THE LAST 12 MONTHS ON GITHUB</text>
+<text x="38" y="96" font-family="{SERIF}" font-size="40" fill="{INK}">Syncing activity...</text>
 '''
         save("activity-v4.svg", svg(W,h,body,"GitHub activity"))
         return
 
     months = s["months"]
     maxv = max((v for _,v in months), default=1) or 1
-    x0, x1, base, maxh, gap = 40, 610, 226, 86, 10
+    x0, x1, base, maxh, gap = 40, 610, 186, 72, 10
     bw = (x1-x0-gap*(len(months)-1))/len(months)
     bars = []
     best_i = max(range(len(months)), key=lambda i: months[i][1]) if months else 0
@@ -226,16 +226,16 @@ def activity(s):
 
     body = f'''
 <rect width="{W}" height="{h}" rx="14" fill="{PAPER}"/>
-<text class="f" {d(.12)} x="40" y="58" font-family="{MONO}" font-size="12" letter-spacing="1" fill="{MUTED}">THE LAST 12 MONTHS ON GITHUB</text>
-<text class="r" {d(.18)} x="38" y="116" font-family="{SERIF}" font-size="58" fill="{INK}">{s["total"]:,} <tspan font-style="italic">contributions</tspan></text>
+<text class="f" {d(.12)} x="40" y="48" font-family="{MONO}" font-size="12" letter-spacing="1" fill="{MUTED}">THE LAST 12 MONTHS ON GITHUB</text>
+<text class="r" {d(.18)} x="38" y="94" font-family="{SERIF}" font-size="40" fill="{INK}">{s["total"]:,} <tspan font-style="italic">contributions</tspan></text>
 <g class="r" {d(.32)}>
-  <text x="666" y="108" font-family="{SERIF}" font-size="44" fill="{BLUE}">{s["active"]} <tspan font-style="italic">days</tspan></text>
-  <text x="666" y="132" font-family="{SANS}" font-size="13" fill="{MUTED}">active in the last year</text>
-  <rect x="666" y="150" width="170" height="1" fill="{RULE}"/>
-  <text x="666" y="186" font-family="{SERIF}" font-size="25" font-style="italic" fill="{INK}">Projects over</text>
-  <text x="666" y="213" font-family="{SERIF}" font-size="25" font-style="italic" fill="{INK}">streaks.</text>
-  <text x="666" y="238" font-family="{SANS}" font-size="11.5" fill="{MUTED}">The work matters more</text>
-  <text x="666" y="254" font-family="{SANS}" font-size="11.5" fill="{MUTED}">than the counter.</text>
+  <text x="666" y="92" font-family="{SERIF}" font-size="32" fill="{BLUE}">{s["active"]} <tspan font-style="italic">days</tspan></text>
+  <text x="666" y="112" font-family="{SANS}" font-size="12.5" fill="{MUTED}">active in the last year</text>
+  <rect x="666" y="128" width="170" height="1" fill="{RULE}"/>
+  <text x="666" y="156" font-family="{SERIF}" font-size="22" font-style="italic" fill="{INK}">Projects over</text>
+  <text x="666" y="180" font-family="{SERIF}" font-size="22" font-style="italic" fill="{INK}">streaks.</text>
+  <text x="666" y="201" font-family="{SANS}" font-size="11.5" fill="{MUTED}">The work matters more</text>
+  <text x="666" y="216" font-family="{SANS}" font-size="11.5" fill="{MUTED}">than the counter.</text>
 </g>
 {''.join(bars)}
 '''
