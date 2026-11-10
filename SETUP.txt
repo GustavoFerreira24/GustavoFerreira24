@@ -1,19 +1,16 @@
-EDITORIAL PROFILE VERSION
+EDITORIAL PROFILE V3
 
-What changed:
-- Hero is now 420px tall and much more prominent.
-- Activity card is 340px tall with stronger serif typography.
-- Three colour cards are 210px tall with large serif / italic headings.
-- "What I'm building" is now an SVG title instead of Markdown.
-- Current work cards are compact (176px) and exactly one third each.
-- Third card now identifies the assigned challenge: Smart Aveiro — From Data to Action.
-- Workflow runs automatically on every push to main, daily, or manually.
-- Unique filenames per run keep GitHub image caching from showing stale SVGs.
+Changes:
+- Fixed Projects over streaks overflow with a two-line layout.
+- Switched to a more editorial system-font stack (Palatino/Iowan Old Style + Avenir/Segoe UI).
+- Project descriptions now explain what each project does, without repeating languages/tools.
+- Added a visual divider and extra spacing before the technology line.
+- Current-project cards are slightly taller for readability.
 
 Replace together:
-- README.md
 - scripts/render_profile.py
-- .github/workflows/update-profile.yml
+
+README.md and workflow can stay as they are from editorial-v2.
 
 Recommended commit:
-content: add Smart Aveiro hackathon challenge
+style: refine profile typography and project cards

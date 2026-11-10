@@ -28,11 +28,11 @@ GREEN = "#31A354"
 W = 880
 BOTTOM = 12
 TILE_W, TILE_H = 880 / 3 - 8, 210
-REPO_W, REPO_H = 880 / 3 - 8, 176
+REPO_W, REPO_H = 880 / 3 - 8, 190
 
-SERIF = "Georgia, 'Times New Roman', serif"
-SANS = "Inter, 'Segoe UI', Arial, sans-serif"
-MONO = "'SFMono-Regular', Consolas, 'Liberation Mono', monospace"
+SERIF = "'Iowan Old Style', 'Palatino Linotype', 'Book Antiqua', Palatino, Georgia, serif"
+SANS = "'Avenir Next', Avenir, 'Segoe UI', Helvetica, Arial, sans-serif"
+MONO = "'SFMono-Regular', Menlo, Monaco, Consolas, 'Liberation Mono', monospace"
 
 BASE_CSS = '''
 @keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
@@ -187,8 +187,9 @@ def activity(s):
   <text x="666" y="108" font-family="{SERIF}" font-size="44" fill="{BLUE}">{s["active"]} <tspan font-style="italic">days</tspan></text>
   <text x="666" y="132" font-family="{SANS}" font-size="13" fill="{MUTED}">active in the last year</text>
   <rect x="666" y="155" width="170" height="1" fill="{RULE}"/>
-  <text x="666" y="205" font-family="{SERIF}" font-size="30" font-style="italic" fill="{INK}">Projects over streaks.</text>
-  <text x="666" y="231" font-family="{SANS}" font-size="13" fill="{MUTED}">The work matters more than the counter.</text>
+  <text x="666" y="196" font-family="{SERIF}" font-size="27" font-style="italic" fill="{INK}">Projects over</text>
+  <text x="666" y="226" font-family="{SERIF}" font-size="27" font-style="italic" fill="{INK}">streaks.</text>
+  <text x="666" y="254" font-family="{SANS}" font-size="12.5" fill="{MUTED}">The work matters more than the counter.</text>
 </g>
 {''.join(bars)}
 '''
@@ -219,15 +220,16 @@ def section_title(theme):
     save(f"title-building-{theme}-v4.svg", svg(W,64,body,"What I'm building",bottom=0))
 
 def current_card(filename, title, desc, tech, color, pos, status):
-    lines = wrap(desc, 34)[:3]
+    lines = wrap(desc, 36)[:3]
     body = f'''
 <rect width="{REPO_W}" height="{REPO_H}" rx="14" fill="{PAPER_LIGHT}"/>
 <g class="r" {d(.35+pos*.10)}>
   <rect x="24" y="28" width="8" height="8" rx="2" fill="{color}"/>
   <text x="40" y="37" font-family="{MONO}" font-size="10.5" letter-spacing=".8" fill="{MUTED}">{escape(status)}</text>
-  <text x="24" y="75" font-family="{SANS}" font-weight="700" font-size="18" fill="{INK}">{escape(title)}</text>
-  {text_lines(24,105,lines,20,f'font-family="{SANS}" font-size="13.5" fill="{INK_SOFT}"')}
-  <text x="24" y="{REPO_H-20}" font-family="{MONO}" font-size="11.5" fill="{MUTED}">{escape(tech)}</text>
+  <text x="24" y="75" font-family="{SANS}" font-weight="700" font-size="19" fill="{INK}">{escape(title)}</text>
+  {text_lines(24,107,lines,20,f'font-family="{SANS}" font-size="13.5" fill="{INK_SOFT}"')}
+  <line x1="24" y1="154" x2="{REPO_W-24}" y2="154" stroke="{RULE}" stroke-width="1"/>
+  <text x="24" y="174" font-family="{MONO}" font-size="11.5" fill="{MUTED}">{escape(tech)}</text>
 </g>
 '''
     save(filename, svg(REPO_W,REPO_H,body,f"{status}: {title}",left=4*pos,right=8-4*pos))
@@ -255,13 +257,13 @@ def main():
     section_title("light")
 
     current_card("current-ccna-v4.svg","CCNA AI Assistant",
-                 "RAG assistant grounded in CCNA study materials and semantic retrieval.",
+                 "Study assistant that retrieves grounded answers from CCNA course materials.",
                  "Python · RAG · Embeddings",BLUE,0,"CURRENT PROJECT")
     current_card("current-laprizza-v4.svg","LaPrizza",
-                 "Restaurant management platform developed at ISEP with DDD and REST APIs.",
+                 "Restaurant management platform for catalogue, orders, stock and preparation workflows.",
                  "C# · .NET 8 · DDD",GREEN,1,"CURRENT PROJECT")
     current_card("current-hackathon-v4.svg","Smart Aveiro",
-                 "Aveiro Tech City Hackathon challenge focused on turning urban data into actionable insights.",
+                 "Smart-city challenge turning urban mobility data into useful insights for the city.",
                  "Data · Analytics · Hackathon",YELLOW,2,"UPCOMING HACKATHON")
     print("Editorial profile cards rendered.")
 
