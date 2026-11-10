@@ -241,12 +241,16 @@ def activity(s):
 '''
     save("activity-v4.svg", svg(W,h,body,f'{s["total"]} GitHub contributions'))
 
-def tile(filename, kicker, line1, line2, blurb, bg, fg, pos, start):
+def tile(filename, kicker, line1, line2, blurb, bg, fg, pos, start, arrow=False):
     lines = wrap(blurb, 35)[:3]
     blurbs = "".join(
         f'<text class="r" {d(start+.52+i*.08)} x="24" y="{153+i*19}" font-family="{SANS}" font-size="13.2" fill="{fg}" opacity=".9">{escape(line)}</text>'
         for i,line in enumerate(lines)
     )
+    arrow_svg = (
+        f'<g class="ai" {d(start+.35)}><text class="n" style="animation-delay:{start+1.15:.2f}s" '
+        f'x="250" y="38" font-family="{MONO}" font-size="15" fill="{fg}">→</text></g>'
+    ) if arrow else ""
     body = f'''
 <defs>
   <clipPath id="tileClip"><rect width="{TILE_W}" height="{TILE_H}" rx="14"/></clipPath>
@@ -266,6 +270,7 @@ def tile(filename, kicker, line1, line2, blurb, bg, fg, pos, start):
   </g>
   <text class="sl" {d(start+.22)} x="24" y="38" font-family="{MONO}" font-size="11"
     letter-spacing="1.1" font-weight="700" fill="{fg}">{escape(kicker)}</text>
+  {arrow_svg}
   <text class="r" {d(start+.32)} x="22" y="91" font-family="{SERIF}" font-size="39"
     fill="{fg}">{escape(line1)}</text>
   <text class="r" {d(start+.43)} x="22" y="128" font-family="{SERIF}" font-style="italic"
@@ -289,18 +294,22 @@ def project_card(filename, title, desc, tech, color, pos, status, cols=3):
     else:
         cw, left, right, chars, max_lines = REPO_W, 4*pos, 8 - 4*pos, 36, 3
     lines = wrap(desc, chars)[:max_lines]
+    # Space below the description is based on max_lines, so cards in a row keep the same height.
+    rule_y = max(154, 107 + (max_lines - 1) * 20 + 24)
+    tech_y = rule_y + 20
+    ch = max(REPO_H, tech_y + 16)
     body = f'''
-<rect width="{cw}" height="{REPO_H}" rx="14" fill="{PAPER_LIGHT}"/>
+<rect width="{cw}" height="{ch}" rx="14" fill="{PAPER_LIGHT}"/>
 <g class="rc" {d(.35+pos*.12)}>
   <rect class="p" {d(.52+pos*.12)} x="24" y="28" width="8" height="8" rx="2" fill="{color}"/>
   <text x="40" y="37" font-family="{MONO}" font-size="10.5" letter-spacing=".8" fill="{MUTED}">{escape(status)}</text>
   <text x="24" y="75" font-family="{SANS}" font-weight="700" font-size="19" fill="{INK}">{escape(title)}</text>
   {text_lines(24,107,lines,20,f'font-family="{SANS}" font-size="13.5" fill="{INK_SOFT}"')}
-  <line x1="24" y1="154" x2="{cw-24}" y2="154" stroke="{RULE}" stroke-width="1"/>
-  <text x="24" y="174" font-family="{MONO}" font-size="11.5" fill="{MUTED}">{escape(tech)}</text>
+  <line x1="24" y1="{rule_y}" x2="{cw-24}" y2="{rule_y}" stroke="{RULE}" stroke-width="1"/>
+  <text x="24" y="{tech_y}" font-family="{MONO}" font-size="11.5" fill="{MUTED}">{escape(tech)}</text>
 </g>
 '''
-    save(filename, svg(cw,REPO_H,body,f"{status}: {title}",left=left,right=right))
+    save(filename, svg(cw,ch,body,f"{status}: {title}",left=left,right=right))
 
 def main():
     try:
@@ -313,10 +322,10 @@ def main():
     activity(stats(data))
     tile("academic-v4.svg","BUILD","Academic","Projects",
          "Team engineering at ISEP across software, data, networking and systems.",
-         BLUE,"#ffffff",0,.35)
+         BLUE,"#ffffff",0,.35,arrow=True)
     tile("personal-v4.svg","EXPLORE","Personal","Projects",
          "Self-directed builds: data pipelines, ML models and study tools.",
-         RED,"#ffffff",1,.48)
+         RED,"#ffffff",1,.48,arrow=True)
     tile("focus-v4.svg","FOCUS","AI, Data","& Cloud",
          "Career paths explored through real projects rather than theory alone.",
          YELLOW,INK,2,.61)
