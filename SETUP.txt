@@ -1,18 +1,39 @@
-V5 — FINAL POLISH
+V6 — DEFINITIVE GITHUB IMAGE CACHE FIX
 
-Changes:
-- Replaced "Consistency matters." with "Projects over streaks."
-- Increased project-card text slightly for better readability.
-- Changed the Cloud & Systems card kicker from "FOUNDATION" to "EXPLORE".
-- Kept "Cloud & Systems" as the area name.
-- Cache-busting workflow remains enabled.
+I confirmed that the generated SVG files in your repository were already correct:
+- 395 contributions
+- 78 active days
+- "Projects over streaks."
+- Cloud & Systems kicker = "EXPLORE"
+
+The issue was GitHub's image proxy cache.
+
+This version fixes it by using a brand-new SVG filename on every workflow run.
+For example:
+  activity-v3-run-42893810503.svg
+
+Because the URL itself changes, GitHub cannot serve an older cached SVG.
+
+Replace:
+- README.md
+- .github/workflows/update-profile.yml
+
+Keep:
+- scripts/render_profile.py
+- cards/*
 
 Recommended commit message:
-style: polish profile stats and project cards
+fix: use unique card filenames to bypass GitHub cache
 
-After pushing:
-1. Go to Actions.
-2. Run "Update profile cards".
-3. Refresh your GitHub profile.
+Then:
+1. Push the changes.
+2. Go to Actions -> Update profile cards.
+3. Run workflow once.
+4. Refresh your profile.
 
-No paid API key is required.
+The bot will:
+- render the latest cards,
+- create run-specific copies,
+- remove the previous run-specific copies,
+- update README.md to point to the new filenames,
+- commit everything automatically.
