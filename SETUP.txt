@@ -1,39 +1,32 @@
-V6 — DEFINITIVE GITHUB IMAGE CACHE FIX
+V7 — AUTO REFRESH + CACHE-PROOF
 
-I confirmed that the generated SVG files in your repository were already correct:
-- 395 contributions
-- 78 active days
-- "Projects over streaks."
-- Cloud & Systems kicker = "EXPLORE"
-
-The issue was GitHub's image proxy cache.
-
-This version fixes it by using a brand-new SVG filename on every workflow run.
-For example:
-  activity-v3-run-42893810503.svg
-
-Because the URL itself changes, GitHub cannot serve an older cached SVG.
-
-Replace:
+This package includes the three files that must stay in sync:
 - README.md
+- scripts/render_profile.py
 - .github/workflows/update-profile.yml
 
-Keep:
-- scripts/render_profile.py
-- cards/*
+Current design choices included:
+- "Projects over streaks."
+- 392/395/etc. contributions + active days only
+- Cloud & Systems uses "EXPLORE"
+- Larger text in the Selected projects cards
+- Selected projects section
+- GitHub contribution/activity cards
+
+Workflow behavior:
+- Runs automatically on every push/commit to main in THIS profile repository.
+- Runs once per day as a fallback.
+- Can still be run manually.
+- Ignores github-actions[bot] pushes to prevent an infinite loop.
+- Publishes SVGs with a brand-new filename on every run, bypassing GitHub's image cache.
 
 Recommended commit message:
-fix: use unique card filenames to bypass GitHub cache
+fix: auto-refresh profile cards on every push
 
-Then:
-1. Push the changes.
-2. Go to Actions -> Update profile cards.
-3. Run workflow once.
-4. Refresh your profile.
+IMPORTANT:
+Replace all three files above together. Do not keep an older render_profile.py.
 
-The bot will:
-- render the latest cards,
-- create run-specific copies,
-- remove the previous run-specific copies,
-- update README.md to point to the new filenames,
-- commit everything automatically.
+After pushing the commit, you do NOT need to press "Run workflow":
+the push itself will trigger the workflow automatically.
+
+If you make a normal commit to this profile repo later, it will refresh again.
