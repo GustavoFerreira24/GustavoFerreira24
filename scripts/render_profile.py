@@ -236,7 +236,7 @@ def activity_card(s):
 
 <line x1="420" y1="73" x2="420" y2="125" stroke="{GRID}"/>
 
-<text x="452" y="91" fill="{INK}" font-size="19" class="serif rise" style="animation-delay:.18s">Consistency matters.</text>
+<text x="452" y="91" fill="{INK}" font-size="19" class="serif rise" style="animation-delay:.18s">Projects over streaks.</text>
 <text x="452" y="115" fill="{MUTED}" font-size="12" class="sans fade" style="animation-delay:.26s">The graph below shows when the work happened.</text>
 
 {''.join(chart)}
@@ -259,10 +259,10 @@ def project_card(filename, title, l1, l2, stack, accent):
 <rect x="1" y="1" width="298" height="203" rx="19" fill="none" stroke="{GRID}"/>
 <rect x="20" y="22" width="7" height="7" fill="{accent}" class="pop"/>
 <text x="37" y="30" fill="{MUTED}" font-size="10" letter-spacing=".8" class="mono">PROJECT</text>
-<text x="20" y="76" fill="{INK}" font-size="22" font-weight="700" class="sans rise">{escape(title)}</text>
-<text x="20" y="112" fill="{MUTED}" font-size="13" class="sans rise" style="animation-delay:.10s">{escape(l1)}</text>
-<text x="20" y="132" fill="{MUTED}" font-size="13" class="sans rise" style="animation-delay:.14s">{escape(l2)}</text>
-<text x="20" y="178" fill="{INK}" opacity=".72" font-size="11" class="mono fade" style="animation-delay:.22s">{escape(stack)}</text>
+<text x="20" y="76" fill="{INK}" font-size="23" font-weight="700" class="sans rise">{escape(title)}</text>
+<text x="20" y="112" fill="{MUTED}" font-size="14" class="sans rise" style="animation-delay:.10s">{escape(l1)}</text>
+<text x="20" y="132" fill="{MUTED}" font-size="14" class="sans rise" style="animation-delay:.14s">{escape(l2)}</text>
+<text x="20" y="178" fill="{INK}" opacity=".72" font-size="12" class="mono fade" style="animation-delay:.22s">{escape(stack)}</text>
 '''
     save(filename, wrap_svg(300,205,body))
 
@@ -279,7 +279,7 @@ def main():
 
     area_card("area-ai-v3.svg","EXPLORE","AI Engineering","RAG · ML · intelligent systems",BLUE,"#FFFFFF")
     area_card("area-data-v3.svg","BUILD","Data Engineering","Pipelines · SQL · analytics",RED,"#FFFFFF")
-    area_card("area-systems-v3.svg","FOUNDATION","Cloud & Systems","Networking · infra · automation",YELLOW,INK)
+    area_card("area-systems-v3.svg","EXPLORE","Cloud & Systems","Networking · infra · automation",YELLOW,INK)
 
     project_card("project-rag-v3.svg","CCNA AI Assistant","RAG assistant grounded in","CCNA study materials","Python · RAG · Embeddings",BLUE)
     project_card("project-weather-v3.svg","Weather Data Pipeline","API ingestion → validation →","Parquet → DuckDB analytics","Python · SQL · DuckDB",GREEN)

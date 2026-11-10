@@ -1,24 +1,18 @@
-V4 — CACHE FIX
+V5 — FINAL POLISH
 
-This version fixes GitHub's stale SVG image cache.
-
-What changed:
-- Every SVG reference in README.md now has a ?v=<cache-key> query parameter.
-- After rendering the cards, the GitHub Action updates that cache key using the workflow run ID.
-- README.md is included in the automatic bot commit, so GitHub is forced to request the fresh SVG.
-
-Replace these files in your profile repository:
-- README.md
-- .github/workflows/update-profile.yml
-
-You can keep the existing V3 cards and render_profile.py.
+Changes:
+- Replaced "Consistency matters." with "Projects over streaks."
+- Increased project-card text slightly for better readability.
+- Changed the Cloud & Systems card kicker from "FOUNDATION" to "EXPLORE".
+- Kept "Cloud & Systems" as the area name.
+- Cache-busting workflow remains enabled.
 
 Recommended commit message:
-fix: refresh cached profile cards after workflow updates
+style: polish profile stats and project cards
 
 After pushing:
 1. Go to Actions.
-2. Run "Update profile cards" once.
-3. Refresh the repository/profile page.
+2. Run "Update profile cards".
+3. Refresh your GitHub profile.
 
 No paid API key is required.
