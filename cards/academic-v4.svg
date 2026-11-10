@@ -63,10 +63,6 @@
   </g>
   <text class="sl" style="animation-delay:0.57s" x="24" y="38" font-family="'SFMono-Regular', Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="11"
     letter-spacing="1.1" font-weight="700" fill="#ffffff">BUILD</text>
-  <g class="ai" style="animation-delay:0.70s">
-    <text class="n" style="animation-delay:1.50s" x="250" y="38"
-      font-family="'SFMono-Regular', Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="15" fill="#ffffff">→</text>
-  </g>
   <text class="r" style="animation-delay:0.67s" x="22" y="91" font-family="'Iowan Old Style', 'Palatino Linotype', 'Book Antiqua', Palatino, Georgia, serif" font-size="39"
     fill="#ffffff">Academic</text>
   <text class="r" style="animation-delay:0.78s" x="22" y="128" font-family="'Iowan Old Style', 'Palatino Linotype', 'Book Antiqua', Palatino, Georgia, serif" font-style="italic"

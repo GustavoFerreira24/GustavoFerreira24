@@ -63,14 +63,10 @@
   </g>
   <text class="sl" style="animation-delay:0.70s" x="24" y="38" font-family="'SFMono-Regular', Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="11"
     letter-spacing="1.1" font-weight="700" fill="#ffffff">EXPLORE</text>
-  <g class="ai" style="animation-delay:0.83s">
-    <text class="n" style="animation-delay:1.63s" x="250" y="38"
-      font-family="'SFMono-Regular', Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="15" fill="#ffffff">→</text>
-  </g>
   <text class="r" style="animation-delay:0.80s" x="22" y="91" font-family="'Iowan Old Style', 'Palatino Linotype', 'Book Antiqua', Palatino, Georgia, serif" font-size="39"
     fill="#ffffff">Personal</text>
   <text class="r" style="animation-delay:0.91s" x="22" y="128" font-family="'Iowan Old Style', 'Palatino Linotype', 'Book Antiqua', Palatino, Georgia, serif" font-style="italic"
     font-size="39" fill="#ffffff">Projects</text>
-  <text class="r" style="animation-delay:1.00s" x="24" y="153" font-family="'Avenir Next', Avenir, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.2" fill="#ffffff" opacity=".9">Hands-on projects used to test AI,</text><text class="r" style="animation-delay:1.08s" x="24" y="172" font-family="'Avenir Next', Avenir, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.2" fill="#ffffff" opacity=".9">Data Engineering, Cloud and</text><text class="r" style="animation-delay:1.16s" x="24" y="191" font-family="'Avenir Next', Avenir, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.2" fill="#ffffff" opacity=".9">Security.</text>
+  <text class="r" style="animation-delay:1.00s" x="24" y="153" font-family="'Avenir Next', Avenir, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.2" fill="#ffffff" opacity=".9">Self-directed builds: data</text><text class="r" style="animation-delay:1.08s" x="24" y="172" font-family="'Avenir Next', Avenir, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.2" fill="#ffffff" opacity=".9">pipelines, ML models and study</text><text class="r" style="animation-delay:1.16s" x="24" y="191" font-family="'Avenir Next', Avenir, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.2" fill="#ffffff" opacity=".9">tools.</text>
 </g>
 </g></svg>

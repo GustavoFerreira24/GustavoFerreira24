@@ -6,7 +6,7 @@ on:
       - main
   workflow_dispatch:
   schedule:
-    - cron: "17 6 * * *"
+    - cron: "17 6 * * 1"  # weekly, Monday
 
 permissions:
   contents: write
@@ -56,6 +56,10 @@ jobs:
               "current-ccna-v4.svg",
               "current-laprizza-v4.svg",
               "current-hackathon-v4.svg",
+              "title-selected-dark-v4.svg",
+              "title-selected-light-v4.svg",
+              "done-weather-v4.svg",
+              "done-bank-v4.svg",
           ]
 
           for old in cards.glob("*-run-*.svg"):

@@ -193,12 +193,11 @@ def hero():
   <text x="68" y="388" font-family="{MONO}" font-size="15" font-weight="700" letter-spacing=".7" fill="{INK}">OPEN TO A CURRICULAR INTERNSHIP - 2027</text>
 </g>
 {''.join(network)}
-<text class="f" {d(.85)} x="654" y="328" font-family="{MONO}" font-size="12" letter-spacing=".6" fill="{MUTED}">AI // DATA // CLOUD</text>
 '''
     save("hero-v4.svg", svg(W,h,body,"Gustavo Ferreira — Computer Engineering at ISEP"))
 
 def activity(s):
-    h = 340
+    h = 272
     if not s:
         body = f'''
 <rect width="{W}" height="{h}" rx="14" fill="{PAPER}"/>
@@ -210,7 +209,7 @@ def activity(s):
 
     months = s["months"]
     maxv = max((v for _,v in months), default=1) or 1
-    x0, x1, base, maxh, gap = 40, 610, 292, 140, 10
+    x0, x1, base, maxh, gap = 40, 610, 226, 86, 10
     bw = (x1-x0-gap*(len(months)-1))/len(months)
     bars = []
     best_i = max(range(len(months)), key=lambda i: months[i][1]) if months else 0
@@ -232,11 +231,11 @@ def activity(s):
 <g class="r" {d(.32)}>
   <text x="666" y="108" font-family="{SERIF}" font-size="44" fill="{BLUE}">{s["active"]} <tspan font-style="italic">days</tspan></text>
   <text x="666" y="132" font-family="{SANS}" font-size="13" fill="{MUTED}">active in the last year</text>
-  <rect x="666" y="155" width="170" height="1" fill="{RULE}"/>
-  <text x="666" y="196" font-family="{SERIF}" font-size="27" font-style="italic" fill="{INK}">Projects over</text>
-  <text x="666" y="226" font-family="{SERIF}" font-size="27" font-style="italic" fill="{INK}">streaks.</text>
-  <text x="666" y="253" font-family="{SANS}" font-size="11.5" fill="{MUTED}">The work matters more</text>
-  <text x="666" y="269" font-family="{SANS}" font-size="11.5" fill="{MUTED}">than the counter.</text>
+  <rect x="666" y="150" width="170" height="1" fill="{RULE}"/>
+  <text x="666" y="186" font-family="{SERIF}" font-size="25" font-style="italic" fill="{INK}">Projects over</text>
+  <text x="666" y="213" font-family="{SERIF}" font-size="25" font-style="italic" fill="{INK}">streaks.</text>
+  <text x="666" y="238" font-family="{SANS}" font-size="11.5" fill="{MUTED}">The work matters more</text>
+  <text x="666" y="254" font-family="{SANS}" font-size="11.5" fill="{MUTED}">than the counter.</text>
 </g>
 {''.join(bars)}
 '''
@@ -267,10 +266,6 @@ def tile(filename, kicker, line1, line2, blurb, bg, fg, pos, start):
   </g>
   <text class="sl" {d(start+.22)} x="24" y="38" font-family="{MONO}" font-size="11"
     letter-spacing="1.1" font-weight="700" fill="{fg}">{escape(kicker)}</text>
-  <g class="ai" {d(start+.35)}>
-    <text class="n" style="animation-delay:{start+1.15:.2f}s" x="250" y="38"
-      font-family="{MONO}" font-size="15" fill="{fg}">→</text>
-  </g>
   <text class="r" {d(start+.32)} x="22" y="91" font-family="{SERIF}" font-size="39"
     fill="{fg}">{escape(line1)}</text>
   <text class="r" {d(start+.43)} x="22" y="128" font-family="{SERIF}" font-style="italic"
@@ -280,28 +275,32 @@ def tile(filename, kicker, line1, line2, blurb, bg, fg, pos, start):
 '''
     save(filename, svg(TILE_W,TILE_H,body,f"{kicker}: {line1} {line2}",left=4*pos,right=8-4*pos))
 
-def section_title(theme):
+def section_title(slug, plain, italic, theme):
     fg = "#e6edf3" if theme == "dark" else INK
     body = (
         f'<text class="r" {d(.25)} x="2" y="47" font-family="{SERIF}" font-size="35" fill="{fg}">'
-        f'What I&apos;m <tspan font-style="italic">building</tspan></text>'
+        f'{escape(plain)} <tspan font-style="italic">{escape(italic)}</tspan></text>'
     )
-    save(f"title-building-{theme}-v4.svg", svg(W,64,body,"What I'm building",bottom=0))
+    save(f"title-{slug}-{theme}-v4.svg", svg(W,64,body,f"{plain} {italic}",bottom=0))
 
-def current_card(filename, title, desc, tech, color, pos, status):
-    lines = wrap(desc, 36)[:3]
+def project_card(filename, title, desc, tech, color, pos, status, cols=3):
+    if cols == 2:
+        cw, left, right, chars, max_lines = W/2 - 6, 6*pos, 6 - 6*pos, 58, 2
+    else:
+        cw, left, right, chars, max_lines = REPO_W, 4*pos, 8 - 4*pos, 36, 3
+    lines = wrap(desc, chars)[:max_lines]
     body = f'''
-<rect width="{REPO_W}" height="{REPO_H}" rx="14" fill="{PAPER_LIGHT}"/>
+<rect width="{cw}" height="{REPO_H}" rx="14" fill="{PAPER_LIGHT}"/>
 <g class="rc" {d(.35+pos*.12)}>
   <rect class="p" {d(.52+pos*.12)} x="24" y="28" width="8" height="8" rx="2" fill="{color}"/>
   <text x="40" y="37" font-family="{MONO}" font-size="10.5" letter-spacing=".8" fill="{MUTED}">{escape(status)}</text>
   <text x="24" y="75" font-family="{SANS}" font-weight="700" font-size="19" fill="{INK}">{escape(title)}</text>
   {text_lines(24,107,lines,20,f'font-family="{SANS}" font-size="13.5" fill="{INK_SOFT}"')}
-  <line x1="24" y1="154" x2="{REPO_W-24}" y2="154" stroke="{RULE}" stroke-width="1"/>
+  <line x1="24" y1="154" x2="{cw-24}" y2="154" stroke="{RULE}" stroke-width="1"/>
   <text x="24" y="174" font-family="{MONO}" font-size="11.5" fill="{MUTED}">{escape(tech)}</text>
 </g>
 '''
-    save(filename, svg(REPO_W,REPO_H,body,f"{status}: {title}",left=4*pos,right=8-4*pos))
+    save(filename, svg(cw,REPO_H,body,f"{status}: {title}",left=left,right=right))
 
 def main():
     try:
@@ -316,24 +315,31 @@ def main():
          "Team engineering at ISEP across software, data, networking and systems.",
          BLUE,"#ffffff",0,.35)
     tile("personal-v4.svg","EXPLORE","Personal","Projects",
-         "Hands-on projects used to test AI, Data Engineering, Cloud and Security.",
+         "Self-directed builds: data pipelines, ML models and study tools.",
          RED,"#ffffff",1,.48)
-    tile("focus-v4.svg","FOCUS","AI · Data","· Cloud",
+    tile("focus-v4.svg","FOCUS","AI, Data","& Cloud",
          "Career paths explored through real projects rather than theory alone.",
          YELLOW,INK,2,.61)
 
-    section_title("dark")
-    section_title("light")
+    for theme in ("dark", "light"):
+        section_title("building", "What I'm", "building", theme)
+        section_title("selected", "Selected", "work", theme)
 
-    current_card("current-ccna-v4.svg","CCNA AI Assistant",
+    project_card("current-ccna-v4.svg","CCNA AI Assistant",
                  "Study assistant that retrieves grounded answers from CCNA course materials.",
                  "Python · RAG · Embeddings",BLUE,0,"CURRENT PROJECT")
-    current_card("current-laprizza-v4.svg","LaPrizza",
+    project_card("current-laprizza-v4.svg","LaPrizza",
                  "Restaurant management platform for catalogue, orders, stock and preparation workflows.",
                  "C# · .NET 8 · DDD",GREEN,1,"CURRENT PROJECT")
-    current_card("current-hackathon-v4.svg","Smart Aveiro",
+    project_card("current-hackathon-v4.svg","Smart Aveiro",
                  "Smart-city challenge turning urban mobility data into useful insights for the city.",
                  "Data · Analytics · Hackathon",YELLOW,2,"UPCOMING HACKATHON")
+    project_card("done-weather-v4.svg","Weather Data Pipeline",
+                 "ETL pipeline for hourly weather in Porto, Lisbon and Madrid: raw JSON to validated Parquet to SQL analytics.",
+                 "Python · pandas · Parquet · DuckDB · pytest",BLUE,0,"COMPLETED",cols=2)
+    project_card("done-bank-v4.svg","Bank Marketing ML",
+                 "Predicts term-deposit subscriptions with leakage-aware features, model benchmarking and threshold tuning.",
+                 "Python · pandas · scikit-learn",RED,1,"COMPLETED",cols=2)
     print("Editorial profile cards rendered.")
 
 if __name__ == "__main__":
