@@ -1,20 +1,24 @@
-SETUP — V3
+V4 — CACHE FIX
 
-Replace the current README.md, scripts/render_profile.py and .github/workflows/update-profile.yml
-with the files in this package, and add the new cards/*-v3.svg files.
+This version fixes GitHub's stale SVG image cache.
+
+What changed:
+- Every SVG reference in README.md now has a ?v=<cache-key> query parameter.
+- After rendering the cards, the GitHub Action updates that cache key using the workflow run ID.
+- README.md is included in the automatic bot commit, so GitHub is forced to request the fresh SVG.
+
+Replace these files in your profile repository:
+- README.md
+- .github/workflows/update-profile.yml
+
+You can keep the existing V3 cards and render_profile.py.
 
 Recommended commit message:
-feat: refine profile stats and selected projects
-
-Why the filenames changed:
-The V3 assets use new filenames (for example activity-v3.svg) to force GitHub's profile
-image cache to load the new design immediately.
+fix: refresh cached profile cards after workflow updates
 
 After pushing:
-1. Open the repository on GitHub.
-2. Go to Actions.
-3. Open "Update profile cards".
-4. Click "Run workflow".
-5. Refresh your GitHub profile.
+1. Go to Actions.
+2. Run "Update profile cards" once.
+3. Refresh the repository/profile page.
 
 No paid API key is required.

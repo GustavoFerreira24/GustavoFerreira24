@@ -27,11 +27,34 @@ jobs:
           GITHUB_USERNAME: GustavoFerreira24
         run: python scripts/render_profile.py
 
+      - name: Refresh README image cache key
+        if: always()
+        env:
+          CACHE_KEY: ${{ github.run_id }}
+        run: |
+          python - <<'PY'
+          import os
+          import re
+          from pathlib import Path
+
+          path = Path("README.md")
+          text = path.read_text(encoding="utf-8")
+          key = os.environ["CACHE_KEY"]
+
+          text = re.sub(
+              r'(\./cards/[^"?]+\.svg)(?:\?v=[^"]*)?',
+              lambda m: f'{m.group(1)}?v={key}',
+              text,
+          )
+
+          path.write_text(text, encoding="utf-8")
+          PY
+
       - name: Commit updated cards
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add cards/
+          git add cards/ README.md
           if git diff --cached --quiet; then
             echo "No changes to commit."
           else
