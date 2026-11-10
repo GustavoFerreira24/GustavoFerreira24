@@ -24,8 +24,8 @@
 </style>
 
 <rect width="300" height="190" rx="20" fill="#315BFF"/>
-<text x="22" y="34" fill="#FFFFFF" font-size="10" letter-spacing="1.1" font-weight="700" class="mono fade">EXPLORE</text>
-<text x="22" y="89" fill="#FFFFFF" font-size="31" class="serif rise">AI Engineering</text>
-<text x="22" y="125" fill="#FFFFFF" opacity=".78" font-size="13" class="sans rise" style="animation-delay:.12s">RAG · ML · intelligent systems</text>
+<text x="22" y="34" fill="#FFFFFF" font-size="10" letter-spacing="1.1" font-weight="700" class="mono fade">BUILD</text>
+<text x="22" y="89" fill="#FFFFFF" font-size="31" class="serif rise">Academic Projects</text>
+<text x="22" y="125" fill="#FFFFFF" opacity=".78" font-size="13" class="sans rise" style="animation-delay:.12s">ISEP · team engineering · systems</text>
 <text x="258" y="35" fill="#FFFFFF" font-size="19" font-weight="700" class="sans">→</text>
 </svg>
