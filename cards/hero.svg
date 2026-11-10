@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="230" viewBox="0 0 900 230">
+
+<style>
+  text { font-family: Inter, "Segoe UI", Arial, sans-serif; }
+  .fade { opacity: 0; animation: fade .65s ease forwards; }
+  .rise { opacity: 0; transform: translateY(12px); animation: rise .7s cubic-bezier(.2,.8,.2,1) forwards; }
+  .bar { transform-box: fill-box; transform-origin: bottom; transform: scaleY(0); animation: grow .7s cubic-bezier(.2,.8,.2,1) forwards; }
+  .cell { opacity: 0; transform-box: fill-box; transform-origin: center; transform: scale(.55); animation: pop .28s ease forwards; }
+  .pulse { animation: pulse 2.2s ease-in-out infinite; transform-origin: center; transform-box: fill-box; }
+  @keyframes fade { to { opacity: 1; } }
+  @keyframes rise { to { opacity: 1; transform: translateY(0); } }
+  @keyframes grow { to { transform: scaleY(1); } }
+  @keyframes pop { to { opacity: 1; transform: scale(1); } }
+  @keyframes pulse { 0%,100%{opacity:.55} 50%{opacity:1} }
+  @media (prefers-reduced-motion: reduce) {
+    .fade,.rise,.bar,.cell,.pulse {
+      animation: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  }
+</style>
+
+
+<rect width="900" height="230" rx="22" fill="#0d1117"/>
+<rect x="1" y="1" width="898" height="228" rx="21" fill="none" stroke="#30363d"/>
+<circle cx="55" cy="48" r="7" fill="#3fb950" class="pulse"/>
+<text x="76" y="55" fill="#8b949e" font-size="18" class="fade" style="animation-delay:.10s">available for a curricular internship · 2027</text>
+<text x="46" y="116" fill="#f0f6fc" font-size="44" font-weight="700" class="rise" style="animation-delay:.15s">Gustavo Ferreira</text>
+<text x="48" y="151" fill="#58a6ff" font-size="22" font-weight="600" class="rise" style="animation-delay:.28s">Computer Engineering @ ISEP</text>
+<text x="48" y="187" fill="#8b949e" font-size="18" class="rise" style="animation-delay:.40s">Exploring AI/ML · Data Engineering · Cloud &amp; Systems</text>
+
+</svg>

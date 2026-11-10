@@ -1,0 +1,22 @@
+SETUP
+
+1. Copy all files/folders in this package to:
+   https://github.com/GustavoFerreira24/GustavoFerreira24
+
+2. Commit and push.
+
+3. Open GitHub -> repository -> Actions -> "Update profile cards".
+
+4. Run the workflow manually once (Run workflow).
+   The workflow uses the built-in GITHUB_TOKEN; no paid API key is needed.
+
+5. Refresh your GitHub profile.
+
+Files:
+- README.md
+- cards/*.svg
+- scripts/render_profile.py
+- .github/workflows/update-profile.yml
+
+The contribution cards included in the package are placeholders. The first workflow
+run replaces them with your real GitHub contribution data automatically.

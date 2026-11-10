@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="180" viewBox="0 0 300 180">
+
+<style>
+  text { font-family: Inter, "Segoe UI", Arial, sans-serif; }
+  .fade { opacity: 0; animation: fade .65s ease forwards; }
+  .rise { opacity: 0; transform: translateY(12px); animation: rise .7s cubic-bezier(.2,.8,.2,1) forwards; }
+  .bar { transform-box: fill-box; transform-origin: bottom; transform: scaleY(0); animation: grow .7s cubic-bezier(.2,.8,.2,1) forwards; }
+  .cell { opacity: 0; transform-box: fill-box; transform-origin: center; transform: scale(.55); animation: pop .28s ease forwards; }
+  .pulse { animation: pulse 2.2s ease-in-out infinite; transform-origin: center; transform-box: fill-box; }
+  @keyframes fade { to { opacity: 1; } }
+  @keyframes rise { to { opacity: 1; transform: translateY(0); } }
+  @keyframes grow { to { transform: scaleY(1); } }
+  @keyframes pop { to { opacity: 1; transform: scale(1); } }
+  @keyframes pulse { 0%,100%{opacity:.55} 50%{opacity:1} }
+  @media (prefers-reduced-motion: reduce) {
+    .fade,.rise,.bar,.cell,.pulse {
+      animation: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  }
+</style>
+
+
+<rect width="300" height="180" rx="20" fill="#161b22"/>
+<rect x="1" y="1" width="298" height="178" rx="19" fill="none" stroke="#30363d"/>
+<rect x="22" y="23" width="42" height="6" rx="3" fill="#3fb950" class="rise" style="animation-delay:0.22s"/>
+<text x="22" y="72" fill="#f0f6fc" font-size="26" font-weight="700" class="rise" style="animation-delay:0.3s">Data</text>
+<text x="22" y="105" fill="#8b949e" font-size="15" class="rise" style="animation-delay:0.38s">ETL, SQL &amp; analytics</text>
+<text x="22" y="148" fill="#3fb950" font-size="14" font-weight="600" class="fade" style="animation-delay:0.5s">VIEW PROJECT →</text>
+
+</svg>
