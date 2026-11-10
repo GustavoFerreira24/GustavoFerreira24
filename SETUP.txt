@@ -1,22 +1,22 @@
 SETUP
 
-1. Copy all files/folders in this package to:
-   https://github.com/GustavoFerreira24/GustavoFerreira24
+Replace the contents of your current profile repo with these files.
 
-2. Commit and push.
+Repository:
+GustavoFerreira24/GustavoFerreira24
 
-3. Open GitHub -> repository -> Actions -> "Update profile cards".
+Recommended commit message:
+feat: redesign GitHub profile with animated portfolio cards
 
-4. Run the workflow manually once (Run workflow).
-   The workflow uses the built-in GITHUB_TOKEN; no paid API key is needed.
+After pushing:
+1. Open the repository on GitHub.
+2. Go to Actions.
+3. Open "Update profile cards".
+4. Click "Run workflow".
+5. Refresh your GitHub profile after the workflow finishes.
 
-5. Refresh your GitHub profile.
+No paid API key is required.
+The workflow uses GitHub's built-in GITHUB_TOKEN.
 
-Files:
-- README.md
-- cards/*.svg
-- scripts/render_profile.py
-- .github/workflows/update-profile.yml
-
-The contribution cards included in the package are placeholders. The first workflow
-run replaces them with your real GitHub contribution data automatically.
+The initial activity cards intentionally show a syncing message instead of fake zero stats.
+The first successful workflow run replaces them with your real GitHub activity.
