@@ -1,6 +1,5 @@
 
 from __future__ import annotations
-
 import datetime as dt
 import json
 import os
@@ -11,53 +10,77 @@ from pathlib import Path
 
 USERNAME = os.getenv("GITHUB_USERNAME", "GustavoFerreira24")
 TOKEN = os.getenv("GITHUB_TOKEN")
-
 ROOT = Path(__file__).resolve().parents[1]
 CARDS = ROOT / "cards"
 CARDS.mkdir(exist_ok=True)
 
+PAPER = "#f3f0e8"
+PAPER_LIGHT = "#fbfaf6"
 INK = "#111111"
-PAPER = "#F6F1E7"
-PAPER2 = "#FFFDF8"
-MUTED = "#6E6A63"
-GRID = "#D8D1C4"
+INK_SOFT = "#44413c"
+MUTED = "#77736b"
+RULE = "#d8d2c7"
 BLUE = "#315BFF"
 RED = "#FF4438"
 YELLOW = "#FFD13B"
-GREEN = "#28A745"
-PURPLE = "#7656D6"
+GREEN = "#31A354"
 
-STYLE = '''
-<style>
-  .sans { font-family: Inter, "Segoe UI", Arial, sans-serif; }
-  .serif { font-family: Georgia, "Times New Roman", serif; }
-  .mono { font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace; }
-  .fade { opacity:0; animation:fade .6s ease forwards; }
-  .rise { opacity:0; transform:translateY(12px); animation:rise .65s cubic-bezier(.2,.8,.2,1) forwards; }
-  .pop { opacity:0; transform:scale(.78); transform-box:fill-box; transform-origin:center; animation:pop .35s ease forwards; }
-  .bar { transform:scaleY(0); transform-box:fill-box; transform-origin:bottom; animation:grow .75s cubic-bezier(.2,.8,.2,1) forwards; }
-  .line { stroke-dasharray:800; stroke-dashoffset:800; animation:draw 1.1s ease forwards; }
-  .pulse { animation:pulse 2.2s ease-in-out infinite; transform-box:fill-box; transform-origin:center; }
-  @keyframes fade { to{opacity:1} }
-  @keyframes rise { to{opacity:1; transform:translateY(0)} }
-  @keyframes pop { to{opacity:1; transform:scale(1)} }
-  @keyframes grow { to{transform:scaleY(1)} }
-  @keyframes draw { to{stroke-dashoffset:0} }
-  @keyframes pulse { 0%,100%{opacity:.35} 50%{opacity:1} }
-  @media (prefers-reduced-motion: reduce) {
-    .fade,.rise,.pop,.bar,.line,.pulse {
-      animation:none!important; opacity:1!important; transform:none!important;
-      stroke-dashoffset:0!important;
-    }
-  }
-</style>
+W = 880
+BOTTOM = 12
+TILE_W, TILE_H = 880 / 3 - 8, 210
+REPO_W, REPO_H = 880 / 3 - 8, 176
+
+SERIF = "Georgia, 'Times New Roman', serif"
+SANS = "Inter, 'Segoe UI', Arial, sans-serif"
+MONO = "'SFMono-Regular', Consolas, 'Liberation Mono', monospace"
+
+BASE_CSS = '''
+@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@keyframes grow{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+@keyframes pop{0%{opacity:0;transform:scale(.55)}75%{opacity:1;transform:scale(1.05)}100%{opacity:1;transform:none}}
+@keyframes nudge{0%,100%{transform:none}50%{transform:translateX(4px)}}
+.r{opacity:0;animation:rise .8s cubic-bezier(.2,.7,.2,1) both;transform-box:fill-box}
+.f{opacity:0;animation:fade .9s ease-out both}
+.g{transform-box:fill-box;transform-origin:bottom;transform:scaleY(0);animation:grow .8s cubic-bezier(.2,.7,.2,1) both}
+.p{opacity:0;transform-box:fill-box;transform-origin:center;animation:pop .4s ease-out both}
+.n{transform-box:fill-box;animation:nudge 1.8s ease-in-out infinite}
+@media (prefers-reduced-motion: reduce){.r,.f,.g,.p,.n{animation:none!important;opacity:1!important;transform:none!important}}
 '''
 
-def wrap_svg(w, h, body):
-    return f'<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" viewBox="0 0 {w} {h}">{STYLE}{body}</svg>'
+def svg(w, h, body, label, left=0, right=0, bottom=BOTTOM):
+    if left:
+        body = f'<g transform="translate({left:.3f} 0)">{body}</g>'
+    ww, hh = w + left + right, h + bottom
+    return (
+        f'<svg xmlns="http://www.w3.org/2000/svg" width="{ww:.3f}" height="{hh}" viewBox="0 0 {ww:.3f} {hh}" '
+        f'role="img" aria-label="{escape(label)}"><title>{escape(label)}</title>'
+        f'<style>{BASE_CSS}</style>{body}</svg>'
+    )
 
 def save(name, content):
     (CARDS / name).write_text(content, encoding="utf-8")
+
+def d(sec):
+    return f'style="animation-delay:{sec:.2f}s"'
+
+def wrap(text, n):
+    lines, line = [], ""
+    for word in text.split():
+        if line and len(line) + 1 + len(word) > n:
+            lines.append(line)
+            line = word
+        else:
+            line = f"{line} {word}".strip()
+    if line:
+        lines.append(line)
+    return lines
+
+def text_lines(x, y, lines, lh, attrs):
+    return "".join(
+        f'<text x="{x}" y="{y+i*lh}" {attrs}>{escape(line)}</text>'
+        for i, line in enumerate(lines)
+    )
 
 def fetch_contributions():
     if not TOKEN:
@@ -77,243 +100,170 @@ def fetch_contributions():
     if result.get("errors"):
         raise RuntimeError(result["errors"])
     cal = result["data"]["user"]["contributionsCollection"]["contributionCalendar"]
-    days = [d for w in cal["weeks"] for d in w["contributionDays"]]
+    days = [day for week in cal["weeks"] for day in week["contributionDays"]]
     return {"total": cal["totalContributions"], "days": days}
 
 def stats(data):
     if not data:
         return None
-    days = data["days"]
     by_month = defaultdict(int)
-    for d in days:
-        by_month[d["date"][:7]] += d["contributionCount"]
-
-    active = sum(d["contributionCount"] > 0 for d in days)
-    busiest = max(days, key=lambda d: d["contributionCount"])
-
-    counts = {d["date"]: d["contributionCount"] for d in days}
-    cur = dt.date.today()
-    if counts.get(cur.isoformat(), 0) == 0:
-        cur -= dt.timedelta(days=1)
-    streak = 0
-    while counts.get(cur.isoformat(), 0) > 0:
-        streak += 1
-        cur -= dt.timedelta(days=1)
-
+    for day in data["days"]:
+        by_month[day["date"][:7]] += day["contributionCount"]
     return {
         "total": data["total"],
-        "active": active,
-        "busiest_count": busiest["contributionCount"],
-        "busiest_date": busiest["date"],
-        "streak": streak,
+        "active": sum(day["contributionCount"] > 0 for day in data["days"]),
         "months": sorted(by_month.items())[-12:],
     }
 
 def hero():
-    pts = [(690,85),(770,110),(835,72),(728,165),(812,190),(865,145),(748,240),(842,252)]
+    h = 420
+    pts = [(650,92),(742,116),(820,74),(690,172),(792,202),(850,154),(722,258),(825,270)]
     edges = [(0,1),(1,2),(0,3),(1,3),(1,5),(2,5),(3,4),(4,5),(3,6),(4,6),(4,7),(5,7)]
     network = []
     for i,(a,b) in enumerate(edges):
         x1,y1=pts[a]; x2,y2=pts[b]
-        network.append(f'<line x1="{x1}" y1="{y1}" x2="{x2}" y2="{y2}" stroke="{INK}" stroke-width="1.5" opacity=".28" class="line" style="animation-delay:{0.18+i*.035:.2f}s"/>')
+        network.append(
+            f'<line class="f" {d(.4+i*.035)} x1="{x1}" y1="{y1}" x2="{x2}" y2="{y2}" '
+            f'stroke="{INK}" stroke-width="1.5" opacity=".25"/>'
+        )
     for i,(x,y) in enumerate(pts):
-        col = BLUE if i in (1,4) else (YELLOW if i==6 else INK)
-        network.append(f'<circle cx="{x}" cy="{y}" r="{6 if i in (1,4) else 4}" fill="{col}" class="pop" style="animation-delay:{0.25+i*.045:.2f}s"/>')
+        fill = BLUE if i in (1,4) else (YELLOW if i==6 else INK)
+        radius = 6 if i in (1,4) else 4
+        network.append(f'<circle class="p" {d(.55+i*.05)} cx="{x}" cy="{y}" r="{radius}" fill="{fill}"/>')
 
     body = f'''
-<rect width="900" height="360" rx="22" fill="{PAPER}"/>
-<rect x="1" y="1" width="898" height="358" rx="21" fill="none" stroke="{GRID}"/>
-
-<rect x="38" y="34" width="9" height="9" fill="{BLUE}" class="pop"/>
-<text x="58" y="43" fill="{MUTED}" font-size="12" letter-spacing="1.2" class="mono fade" style="animation-delay:.08s">COMPUTER ENGINEERING @ ISEP</text>
-
-<text x="38" y="138" fill="{INK}" font-size="68" class="serif rise" style="animation-delay:.12s">Gustavo</text>
-<text x="38" y="207" fill="{INK}" font-size="76" font-style="italic" class="serif rise" style="animation-delay:.22s">Ferreira</text>
-
-<text x="42" y="260" fill="{MUTED}" font-size="17" class="sans rise" style="animation-delay:.32s">Building practical systems across AI, data and cloud -</text>
-<text x="42" y="286" fill="{MUTED}" font-size="17" class="sans rise" style="animation-delay:.38s">one project at a time.</text>
-
-<circle cx="44" cy="326" r="6" fill="{GREEN}" class="pulse"/>
-<text x="60" y="332" fill="{INK}" font-size="16" font-weight="700" letter-spacing=".6" class="mono fade" style="animation-delay:.48s">OPEN TO A CURRICULAR INTERNSHIP · 2027</text>
-
+<rect width="{W}" height="{h}" rx="14" fill="{PAPER}"/>
+<g class="f" {d(0)}>
+  <rect x="48" y="49" width="8" height="8" rx="2" fill="{BLUE}"/>
+  <text x="66" y="57" font-family="{MONO}" font-size="12" letter-spacing="1" fill="{MUTED}">COMPUTER ENGINEERING @ ISEP</text>
+</g>
+<text class="r" {d(.12)} x="44" y="184" font-family="{SERIF}" font-size="104" letter-spacing="-2" fill="{INK}">Gustavo</text>
+<text class="r" {d(.26)} x="44" y="282" font-family="{SERIF}" font-style="italic" font-size="108" letter-spacing="-2" fill="{INK}">Ferreira</text>
+<g class="r" {d(.48)}>
+  <text x="48" y="330" font-family="{SANS}" font-size="18" fill="{INK_SOFT}">Building practical projects across AI, Data Engineering and Cloud.</text>
+</g>
+<g class="f" {d(.66)}>
+  <circle cx="51" cy="382" r="6" fill="{GREEN}"/>
+  <text x="68" y="388" font-family="{MONO}" font-size="15" font-weight="700" letter-spacing=".7" fill="{INK}">OPEN TO A CURRICULAR INTERNSHIP - 2027</text>
+</g>
 {''.join(network)}
-<text x="688" y="315" fill="{INK}" opacity=".58" font-size="12" class="mono fade" style="animation-delay:.62s">AI // DATA // CLOUD</text>
+<text class="f" {d(.85)} x="654" y="328" font-family="{MONO}" font-size="12" letter-spacing=".6" fill="{MUTED}">AI // DATA // CLOUD</text>
 '''
-    save("hero-v3.svg", wrap_svg(900,300,body))
+    save("hero-v4.svg", svg(W,h,body,"Gustavo Ferreira — Computer Engineering at ISEP"))
 
-def contribution_card(data):
-    if not data:
-        body = f'''
-<rect width="900" height="210" rx="22" fill="{PAPER2}"/>
-<rect x="1" y="1" width="898" height="208" rx="21" fill="none" stroke="{GRID}"/>
-<text x="38" y="50" fill="{INK}" font-size="30" class="serif rise">Learning in public, <tspan fill="{BLUE}" font-style="italic">building for real.</tspan></text>
-<text x="38" y="95" fill="{MUTED}" font-size="13" class="mono fade" style="animation-delay:.2s">Run the GitHub Action once to load live contribution data.</text>
-'''
-        save("contributions-v3.svg", wrap_svg(900,210,body))
-        return
-
-    days = data["days"]
-    by_date = {d["date"]: d["contributionCount"] for d in days}
-    first = dt.date.fromisoformat(days[0]["date"])
-    last = dt.date.fromisoformat(days[-1]["date"])
-    start = first - dt.timedelta(days=(first.weekday()+1)%7)
-
-    weeks=[]
-    cur=start
-    while cur<=last:
-        week=[]
-        for _ in range(7):
-            week.append((cur,by_date.get(cur.isoformat(),0)))
-            cur += dt.timedelta(days=1)
-        weeks.append(week)
-
-    maxc=max((c for w in weeks for _,c in w),default=1) or 1
-    palette=["#ECE7DC","#C5D2FF","#8EA9FF","#587EFF",BLUE]
-    cells=[]
-    x0,y0,size,gap=38,92,10,3
-    for wi,week in enumerate(weeks[-53:]):
-        for di,(date,count) in enumerate(week):
-            level=0 if count==0 else min(4,max(1,int((count/maxc)*4)+1))
-            x=x0+wi*(size+gap); y=y0+di*(size+gap)
-            cells.append(f'<rect x="{x}" y="{y}" width="{size}" height="{size}" rx="2" fill="{palette[level]}" class="pop" style="animation-delay:{.06+wi*.008+di*.002:.3f}s"/>')
-
-    body=f'''
-<rect width="900" height="210" rx="22" fill="{PAPER2}"/>
-<rect x="1" y="1" width="898" height="208" rx="21" fill="none" stroke="{GRID}"/>
-<text x="38" y="50" fill="{INK}" font-size="30" class="serif rise">Learning in public, <tspan fill="{BLUE}" font-style="italic">building for real.</tspan></text>
-<text x="862" y="48" text-anchor="end" fill="{MUTED}" font-size="10" letter-spacing="1" class="mono fade">REFRESHED DAILY</text>
-{''.join(cells)}
-'''
-    save("contributions-v3.svg", wrap_svg(900,210,body))
-
-def activity_card(s):
+def activity(s):
+    h = 340
     if not s:
-        body=f"""
-<rect width="900" height="360" rx="22" fill="{PAPER}"/>
-<rect x="1" y="1" width="898" height="298" rx="21" fill="none" stroke="{GRID}"/>
-<text x="38" y="48" fill="{MUTED}" font-size="11" letter-spacing="1.2" class="mono">THE LAST 12 MONTHS ON GITHUB</text>
-<text x="38" y="110" fill="{INK}" font-size="42" class="serif">Syncing activity...</text>
-<text x="38" y="145" fill="{MUTED}" font-size="13" class="sans">Run the workflow once and this card will fill with your real GitHub data.</text>
-"""
-        save("activity-v3.svg", wrap_svg(900,300,body))
+        body = f'''
+<rect width="{W}" height="{h}" rx="14" fill="{PAPER}"/>
+<text x="40" y="58" font-family="{MONO}" font-size="12" letter-spacing="1" fill="{MUTED}">THE LAST 12 MONTHS ON GITHUB</text>
+<text x="38" y="120" font-family="{SERIF}" font-size="52" fill="{INK}">Syncing activity...</text>
+'''
+        save("activity-v4.svg", svg(W,h,body,"GitHub activity"))
         return
 
-    months=s["months"]
-    maxv=max((v for _,v in months),default=1) or 1
-    chart=[]
-    x0=44
-    gap=58
-    bw=34
-    base=258
-    max_h=112
-
-    for i,(m,v) in enumerate(months):
-        h=max_h*v/maxv if v else 3
-        x=x0+i*gap
-        y=base-h
-        label=dt.datetime.strptime(m,"%Y-%m").strftime("%b")
-        fill = BLUE if i == len(months)-1 else INK
-        chart.append(
-            f'<rect x="{x}" y="{y:.1f}" width="{bw}" height="{h:.1f}" rx="4" '
-            f'fill="{fill}" class="bar" style="animation-delay:{.18+i*.035:.2f}s"/>'
-        )
-        chart.append(
-            f'<text x="{x+bw/2}" y="280" text-anchor="middle" fill="{MUTED}" '
-            f'font-size="10" class="mono">{label}</text>'
+    months = s["months"]
+    maxv = max((v for _,v in months), default=1) or 1
+    x0, x1, base, maxh, gap = 40, 610, 292, 140, 10
+    bw = (x1-x0-gap*(len(months)-1))/len(months)
+    bars = []
+    best_i = max(range(len(months)), key=lambda i: months[i][1]) if months else 0
+    for i,(month,value) in enumerate(months):
+        height = max(4, round(value/maxv*maxh))
+        x = x0+i*(bw+gap)
+        fill = BLUE if i in (best_i, len(months)-1) else INK
+        label = dt.datetime.strptime(month,"%Y-%m").strftime("%b")
+        bars.append(
+            f'<rect class="g" {d(.6+i*.06)} x="{x:.1f}" y="{base-height}" width="{bw:.1f}" height="{height}" rx="4" fill="{fill}"/>'
+            f'<text class="f" {d(.65+i*.06)} x="{x+bw/2:.1f}" y="{base+22}" text-anchor="middle" '
+            f'font-family="{MONO}" font-size="11" fill="{MUTED}">{label}</text>'
         )
 
-    body=f"""
-<rect width="900" height="300" rx="22" fill="{PAPER}"/>
-<rect x="1" y="1" width="898" height="298" rx="21" fill="none" stroke="{GRID}"/>
-
-<text x="38" y="43" fill="{MUTED}" font-size="11" letter-spacing="1.2" class="mono fade">THE LAST 12 MONTHS ON GITHUB</text>
-
-<text x="38" y="100" fill="{INK}" font-size="46" class="serif rise">{s["total"]:,}</text>
-<text x="38" y="122" fill="{MUTED}" font-size="12" class="sans">contributions</text>
-
-<text x="260" y="100" fill="{BLUE}" font-size="46" class="serif rise" style="animation-delay:.12s">{s["active"]}</text>
-<text x="260" y="122" fill="{MUTED}" font-size="12" class="sans">active days</text>
-
-<line x1="420" y1="73" x2="420" y2="125" stroke="{GRID}"/>
-
-<text x="452" y="91" fill="{INK}" font-size="19" class="serif rise" style="animation-delay:.18s">Projects over streaks.</text>
-<text x="452" y="115" fill="{MUTED}" font-size="12" class="sans fade" style="animation-delay:.26s">The graph below shows when the work happened.</text>
-
-{''.join(chart)}
-"""
-    save("activity-v3.svg", wrap_svg(900,300,body))
-
-def area_card(filename, kicker, title, subtitle, accent, text_color="#111111"):
-    body=f'''
-<rect width="300" height="190" rx="20" fill="{accent}"/>
-<text x="22" y="34" fill="{text_color}" font-size="10" letter-spacing="1.1" font-weight="700" class="mono fade">{escape(kicker)}</text>
-<text x="22" y="89" fill="{text_color}" font-size="31" class="serif rise">{escape(title)}</text>
-<text x="22" y="125" fill="{text_color}" opacity=".78" font-size="13" class="sans rise" style="animation-delay:.12s">{escape(subtitle)}</text>
-<text x="258" y="35" fill="{text_color}" font-size="19" font-weight="700" class="sans">→</text>
+    body = f'''
+<rect width="{W}" height="{h}" rx="14" fill="{PAPER}"/>
+<text class="f" {d(.12)} x="40" y="58" font-family="{MONO}" font-size="12" letter-spacing="1" fill="{MUTED}">THE LAST 12 MONTHS ON GITHUB</text>
+<text class="r" {d(.18)} x="38" y="116" font-family="{SERIF}" font-size="58" fill="{INK}">{s["total"]:,} <tspan font-style="italic">contributions</tspan></text>
+<g class="r" {d(.32)}>
+  <text x="666" y="108" font-family="{SERIF}" font-size="44" fill="{BLUE}">{s["active"]} <tspan font-style="italic">days</tspan></text>
+  <text x="666" y="132" font-family="{SANS}" font-size="13" fill="{MUTED}">active in the last year</text>
+  <rect x="666" y="155" width="170" height="1" fill="{RULE}"/>
+  <text x="666" y="205" font-family="{SERIF}" font-size="30" font-style="italic" fill="{INK}">Projects over streaks.</text>
+  <text x="666" y="231" font-family="{SANS}" font-size="13" fill="{MUTED}">The work matters more than the counter.</text>
+</g>
+{''.join(bars)}
 '''
-    save(filename, wrap_svg(300,190,body))
+    save("activity-v4.svg", svg(W,h,body,f'{s["total"]} GitHub contributions'))
 
-def project_card(filename, title, l1, l2, stack, accent):
-    body=f'''
-<rect width="300" height="205" rx="20" fill="{PAPER2}"/>
-<rect x="1" y="1" width="298" height="203" rx="19" fill="none" stroke="{GRID}"/>
-<rect x="20" y="22" width="7" height="7" fill="{accent}" class="pop"/>
-<text x="37" y="30" fill="{MUTED}" font-size="10" letter-spacing=".8" class="mono">PROJECT</text>
-<text x="20" y="76" fill="{INK}" font-size="23" font-weight="700" class="sans rise">{escape(title)}</text>
-<text x="20" y="112" fill="{MUTED}" font-size="14" class="sans rise" style="animation-delay:.10s">{escape(l1)}</text>
-<text x="20" y="132" fill="{MUTED}" font-size="14" class="sans rise" style="animation-delay:.14s">{escape(l2)}</text>
-<text x="20" y="178" fill="{INK}" opacity=".72" font-size="12" class="mono fade" style="animation-delay:.22s">{escape(stack)}</text>
+def tile(filename, kicker, line1, line2, blurb, bg, fg, pos, start):
+    lines = wrap(blurb, 35)[:3]
+    blurbs = "".join(
+        f'<text class="r" {d(start+.52+i*.08)} x="24" y="{153+i*19}" font-family="{SANS}" font-size="13.2" fill="{fg}" opacity=".9">{escape(line)}</text>'
+        for i,line in enumerate(lines)
+    )
+    body = f'''
+<rect width="{TILE_W}" height="{TILE_H}" rx="14" fill="{bg}"/>
+<text class="f" {d(start)} x="24" y="38" font-family="{MONO}" font-size="11" letter-spacing="1.1" font-weight="700" fill="{fg}">{escape(kicker)}</text>
+<text class="n" x="250" y="38" font-family="{MONO}" font-size="15" fill="{fg}">→</text>
+<text class="r" {d(start+.17)} x="22" y="91" font-family="{SERIF}" font-size="39" fill="{fg}">{escape(line1)}</text>
+<text class="r" {d(start+.29)} x="22" y="128" font-family="{SERIF}" font-style="italic" font-size="39" fill="{fg}">{escape(line2)}</text>
+{blurbs}
 '''
-    save(filename, wrap_svg(300,205,body))
+    save(filename, svg(TILE_W,TILE_H,body,f"{kicker}: {line1} {line2}",left=4*pos,right=8-4*pos))
 
+def section_title(theme):
+    fg = "#e6edf3" if theme == "dark" else INK
+    body = (
+        f'<text class="r" {d(.15)} x="2" y="47" font-family="{SERIF}" font-size="35" fill="{fg}">'
+        f'What I&apos;m <tspan font-style="italic">building</tspan></text>'
+    )
+    save(f"title-building-{theme}-v4.svg", svg(W,64,body,"What I'm building",bottom=0))
 
-def wide_project_card(filename, title, l1, l2, stack, accent, status):
-    body=f"""
-<rect width="440" height="205" rx="20" fill="{PAPER2}"/>
-<rect x="1" y="1" width="438" height="203" rx="19" fill="none" stroke="{GRID}"/>
-<rect x="22" y="22" width="7" height="7" fill="{accent}" class="pop"/>
-<text x="39" y="30" fill="{MUTED}" font-size="10" letter-spacing=".8" class="mono">{escape(status)}</text>
-<text x="22" y="76" fill="{INK}" font-size="25" font-weight="700" class="sans rise">{escape(title)}</text>
-<text x="22" y="113" fill="{MUTED}" font-size="14" class="sans rise" style="animation-delay:.10s">{escape(l1)}</text>
-<text x="22" y="135" fill="{MUTED}" font-size="14" class="sans rise" style="animation-delay:.14s">{escape(l2)}</text>
-<text x="22" y="179" fill="{INK}" opacity=".72" font-size="12" class="mono fade" style="animation-delay:.22s">{escape(stack)}</text>
-"""
-    save(filename, wrap_svg(440,205,body))
+def current_card(filename, title, desc, tech, color, pos, status):
+    lines = wrap(desc, 34)[:3]
+    body = f'''
+<rect width="{REPO_W}" height="{REPO_H}" rx="14" fill="{PAPER_LIGHT}"/>
+<g class="r" {d(.35+pos*.10)}>
+  <rect x="24" y="28" width="8" height="8" rx="2" fill="{color}"/>
+  <text x="40" y="37" font-family="{MONO}" font-size="10.5" letter-spacing=".8" fill="{MUTED}">{escape(status)}</text>
+  <text x="24" y="75" font-family="{SANS}" font-weight="700" font-size="18" fill="{INK}">{escape(title)}</text>
+  {text_lines(24,105,lines,20,f'font-family="{SANS}" font-size="13.5" fill="{INK_SOFT}"')}
+  <text x="24" y="{REPO_H-20}" font-family="{MONO}" font-size="11.5" fill="{MUTED}">{escape(tech)}</text>
+</g>
+'''
+    save(filename, svg(REPO_W,REPO_H,body,f"{status}: {title}",left=4*pos,right=8-4*pos))
 
 def main():
-    hero()
     try:
         data = fetch_contributions()
     except Exception as exc:
         print(f"Contribution fetch failed: {exc}")
         data = None
 
-    contribution_card(data)
-    activity_card(stats(data))
+    hero()
+    activity(stats(data))
+    tile("academic-v4.svg","BUILD","Academic","Projects",
+         "Team engineering at ISEP across software, data, networking and systems.",
+         BLUE,"#ffffff",0,.35)
+    tile("personal-v4.svg","EXPLORE","Personal","Projects",
+         "Hands-on projects used to test AI, Data Engineering, Cloud and Security.",
+         RED,"#ffffff",1,.48)
+    tile("focus-v4.svg","FOCUS","AI · Data","· Cloud",
+         "Career paths explored through real projects rather than theory alone.",
+         YELLOW,INK,2,.61)
 
-    area_card("area-ai-v3.svg","BUILD","Academic Projects","ISEP · team engineering · systems",BLUE,"#FFFFFF")
-    area_card("area-data-v3.svg","EXPLORE","Personal Projects","AI · data · cloud · security",RED,"#FFFFFF")
-    area_card("area-systems-v3.svg","FOCUS","AI · Data · Cloud","Exploring through hands-on projects",YELLOW,INK)
-    wide_project_card(
-        "project-rag-v3.svg",
-        "CCNA AI Assistant",
-        "RAG assistant grounded in CCNA",
-        "study materials and retrieval",
-        "Python · RAG · Embeddings",
-        BLUE,
-        "CURRENT PROJECT",
-    )
-    wide_project_card(
-        "project-laprizza-v3.svg",
-        "LaPrizza",
-        "Restaurant management platform",
-        "built with DDD and REST APIs",
-        "C# · .NET 8 · DDD · REST",
-        GREEN,
-        "CURRENT PROJECT",
-    )
+    section_title("dark")
+    section_title("light")
 
-    print("Profile cards rendered.")
+    current_card("current-ccna-v4.svg","CCNA AI Assistant",
+                 "RAG assistant grounded in CCNA study materials and semantic retrieval.",
+                 "Python · RAG · Embeddings",BLUE,0,"CURRENT PROJECT")
+    current_card("current-laprizza-v4.svg","LaPrizza",
+                 "Restaurant management platform developed at ISEP with DDD and REST APIs.",
+                 "C# · .NET 8 · DDD",GREEN,1,"CURRENT PROJECT")
+    current_card("current-hackathon-v4.svg","Smart Aveiro",
+                 "Aveiro Tech City Hackathon challenge focused on turning urban data into actionable insights.",
+                 "Data · Analytics · Hackathon",YELLOW,2,"UPCOMING HACKATHON")
+    print("Editorial profile cards rendered.")
 
 if __name__ == "__main__":
     main()

@@ -1,31 +1,19 @@
-FINAL PROFILE VERSION
+EDITORIAL PROFILE VERSION
 
-Structure:
-1. Larger hero banner
-2. GitHub activity card
-3. Three story cards:
-   - BUILD — Academic Projects
-   - EXPLORE — Personal Projects
-   - FOCUS — AI · Data · Cloud
-4. What I'm building:
-   - CCNA AI Assistant
-   - LaPrizza
-   - Hackathon should be added here only when it actually starts
-5. LinkedIn / Email
-
-Workflow:
-- Automatically runs on every push to main
-- Runs daily as a fallback
-- Can still be triggered manually
-- Ignores github-actions[bot] pushes to prevent loops
-- Uses unique filenames for fresh SVGs and avoids GitHub image cache issues
+What changed:
+- Hero is now 420px tall and much more prominent.
+- Activity card is 340px tall with stronger serif typography.
+- Three colour cards are 210px tall with large serif / italic headings.
+- "What I'm building" is now an SVG title instead of Markdown.
+- Current work cards are compact (176px) and exactly one third each.
+- Third card now identifies the assigned challenge: Smart Aveiro — From Data to Action.
+- Workflow runs automatically on every push to main, daily, or manually.
+- Unique filenames per run keep GitHub image caching from showing stale SVGs.
 
 Replace together:
 - README.md
 - scripts/render_profile.py
 - .github/workflows/update-profile.yml
 
-Recommended commit message:
-feat: finalize GitHub profile structure
-
-After you push, the workflow should run automatically.
+Recommended commit:
+content: add Smart Aveiro hackathon challenge

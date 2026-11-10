@@ -13,8 +13,6 @@ permissions:
 
 jobs:
   render:
-    # A bot commit is created after every refresh. Ignore that push so the
-    # workflow does not trigger itself forever.
     if: github.event_name != 'push' || github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
 
@@ -48,22 +46,22 @@ jobs:
           readme_path = Path("README.md")
 
           source_names = [
-              "hero-v3.svg",
-              "activity-v3.svg",
-              "area-ai-v3.svg",
-              "area-data-v3.svg",
-              "area-systems-v3.svg",
-              "project-rag-v3.svg",
-              "project-laprizza-v3.svg",
+              "hero-v4.svg",
+              "activity-v4.svg",
+              "academic-v4.svg",
+              "personal-v4.svg",
+              "focus-v4.svg",
+              "title-building-dark-v4.svg",
+              "title-building-light-v4.svg",
+              "current-ccna-v4.svg",
+              "current-laprizza-v4.svg",
+              "current-hackathon-v4.svg",
           ]
 
-          # Remove the previous run-specific copies so the repo stays clean.
           for old in cards.glob("*-run-*.svg"):
               old.unlink()
 
           text = readme_path.read_text(encoding="utf-8")
-
-          # Normalize previous run-specific references back to stable paths.
           for source_name in source_names:
               stem = Path(source_name).stem
               text = re.sub(
@@ -72,17 +70,13 @@ jobs:
                   text,
               )
 
-          # Copy the freshly rendered SVGs to URLs GitHub has never cached.
           for source_name in source_names:
               source = cards / source_name
               if not source.exists():
                   raise FileNotFoundError(f"Missing rendered card: {source}")
-
               stem = source.stem
               target_name = f"{stem}-run-{run_id}.svg"
-              target = cards / target_name
-              shutil.copy2(source, target)
-
+              shutil.copy2(source, cards / target_name)
               text = text.replace(
                   f"./cards/{source_name}",
                   f"./cards/{target_name}",
@@ -96,7 +90,6 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A cards/ README.md
-
           if git diff --cached --quiet; then
             echo "No profile changes to commit."
           else
