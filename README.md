@@ -5,8 +5,7 @@
 <picture><source media="(prefers-color-scheme: dark)" srcset="./cards/title-building-dark-v4-run-44099971133.svg" /><img src="./cards/title-building-light-v4-run-44099971133.svg" width="100%" alt="What I'm building" /></picture><br>
 <a href="https://github.com/GustavoFerreira24/ccna-ai-assistant"><img src="./cards/current-ccna-v4-run-44099971133.svg" width="33.333%" alt="CCNA AI Assistant" /></a><img src="./cards/current-laprizza-v4-run-44099971133.svg" width="33.333%" alt="LaPrizza" /><img src="./cards/current-hackathon-v4-run-44099971133.svg" width="33.333%" alt="Aveiro Tech City Hackathon — upcoming" /><br>
 <picture><source media="(prefers-color-scheme: dark)" srcset="./cards/title-selected-dark-v4-run-44099971133.svg" /><img src="./cards/title-selected-light-v4-run-44099971133.svg" width="100%" alt="Selected work" /></picture><br>
-<a href="https://github.com/GustavoFerreira24/weather-data-pipeline"><img src="./cards/done-weather-v4-run-44099971133.svg" width="50%" alt="Weather Data Pipeline — completed" /></a><a href="https://github.com/GustavoFerreira24/bank-marketing-ml"><img src="./cards/done-bank-v4-run-44099971133.svg" width="50%" alt="Bank Marketing ML — completed" /></a><br>
-<img src="./cards/activity-v4-run-44099971133.svg" width="100%" alt="GitHub activity in the last 12 months" />
+<a href="https://github.com/GustavoFerreira24/weather-data-pipeline"><img src="./cards/done-weather-v4-run-44099971133.svg" width="50%" alt="Weather Data Pipeline — completed" /></a><a href="https://github.com/GustavoFerreira24/bank-marketing-ml"><img src="./cards/done-bank-v4-run-44099971133.svg" width="50%" alt="Bank Marketing ML — completed" /></a>
 </div>
 
 <p align="center">

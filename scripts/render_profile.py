@@ -1,15 +1,8 @@
 
 from __future__ import annotations
-import datetime as dt
-import json
-import os
-import urllib.request
-from collections import defaultdict
 from html import escape
 from pathlib import Path
 
-USERNAME = os.getenv("GITHUB_USERNAME", "GustavoFerreira24")
-TOKEN = os.getenv("GITHUB_TOKEN")
 ROOT = Path(__file__).resolve().parents[1]
 CARDS = ROOT / "cards"
 CARDS.mkdir(exist_ok=True)
@@ -116,41 +109,8 @@ def text_lines(x, y, lines, lh, attrs):
         for i, line in enumerate(lines)
     )
 
-def fetch_contributions():
-    if not TOKEN:
-        return None
-    query = "query($login:String!){user(login:$login){contributionsCollection{contributionCalendar{totalContributions weeks{contributionDays{date contributionCount}}}}}}"
-    req = urllib.request.Request(
-        "https://api.github.com/graphql",
-        data=json.dumps({"query": query, "variables": {"login": USERNAME}}).encode(),
-        headers={
-            "Authorization": f"Bearer {TOKEN}",
-            "Content-Type": "application/json",
-            "User-Agent": "profile-readme-renderer",
-        },
-    )
-    with urllib.request.urlopen(req, timeout=30) as resp:
-        result = json.load(resp)
-    if result.get("errors"):
-        raise RuntimeError(result["errors"])
-    cal = result["data"]["user"]["contributionsCollection"]["contributionCalendar"]
-    days = [day for week in cal["weeks"] for day in week["contributionDays"]]
-    return {"total": cal["totalContributions"], "days": days}
-
-def stats(data):
-    if not data:
-        return None
-    by_month = defaultdict(int)
-    for day in data["days"]:
-        by_month[day["date"][:7]] += day["contributionCount"]
-    return {
-        "total": data["total"],
-        "active": sum(day["contributionCount"] > 0 for day in data["days"]),
-        "months": sorted(by_month.items())[-12:],
-    }
-
 def hero():
-    h = 420
+    h = 380
     pts = [(650,92),(742,116),(820,74),(690,172),(792,202),(850,154),(722,258),(825,270)]
     edges = [(0,1),(1,2),(0,3),(1,3),(1,5),(2,5),(3,4),(4,5),(3,6),(4,6),(4,7),(5,7)]
     network = []
@@ -185,56 +145,13 @@ def hero():
 </g>
 <text class="r" {d(.12)} x="44" y="184" font-family="{SERIF}" font-size="104" letter-spacing="-2" fill="{INK}">Gustavo</text>
 <text class="r" {d(.26)} x="44" y="282" font-family="{SERIF}" font-style="italic" font-size="108" letter-spacing="-2" fill="url(#nameShine)">Ferreira</text>
-<g class="r" {d(.48)}>
-  <text x="48" y="330" font-family="{SANS}" font-size="18" fill="{INK_SOFT}">I build small projects to get a first feel for data, ML and cloud.</text>
-</g>
 <g class="f" {d(.66)}>
-  <circle class="live" cx="51" cy="382" r="6" fill="{GREEN}"/>
-  <text x="68" y="388" font-family="{MONO}" font-size="15" font-weight="700" letter-spacing=".7" fill="{INK}">OPEN TO A CURRICULAR INTERNSHIP - 2027</text>
+  <circle class="live" cx="51" cy="338" r="6" fill="{GREEN}"/>
+  <text x="68" y="344" font-family="{MONO}" font-size="15" font-weight="700" letter-spacing=".7" fill="{INK}">OPEN TO A CURRICULAR INTERNSHIP - 2027</text>
 </g>
 {''.join(network)}
 '''
     save("hero-v4.svg", svg(W,h,body,"Gustavo Ferreira — Computer Engineering at ISEP"))
-
-def activity(s):
-    h = 232
-    if not s:
-        body = f'''
-<rect width="{W}" height="{h}" rx="14" fill="{PAPER}"/>
-<text x="40" y="48" font-family="{MONO}" font-size="12" letter-spacing="1" fill="{MUTED}">THE LAST 12 MONTHS ON GITHUB</text>
-<text x="38" y="96" font-family="{SERIF}" font-size="40" fill="{INK}">Syncing activity...</text>
-'''
-        save("activity-v4.svg", svg(W,h,body,"GitHub activity"))
-        return
-
-    months = s["months"]
-    maxv = max((v for _,v in months), default=1) or 1
-    x0, x1, base, maxh, gap = 40, 610, 186, 72, 10
-    bw = (x1-x0-gap*(len(months)-1))/len(months)
-    bars = []
-    best_i = max(range(len(months)), key=lambda i: months[i][1]) if months else 0
-    for i,(month,value) in enumerate(months):
-        height = max(4, round(value/maxv*maxh))
-        x = x0+i*(bw+gap)
-        fill = BLUE if i in (best_i, len(months)-1) else INK
-        label = dt.datetime.strptime(month,"%Y-%m").strftime("%b")
-        bars.append(
-            f'<rect class="g" {d(.6+i*.06)} x="{x:.1f}" y="{base-height}" width="{bw:.1f}" height="{height}" rx="4" fill="{fill}"/>'
-            f'<text class="f" {d(.65+i*.06)} x="{x+bw/2:.1f}" y="{base+22}" text-anchor="middle" '
-            f'font-family="{MONO}" font-size="11" fill="{MUTED}">{label}</text>'
-        )
-
-    body = f'''
-<rect width="{W}" height="{h}" rx="14" fill="{PAPER}"/>
-<text class="f" {d(.12)} x="40" y="48" font-family="{MONO}" font-size="12" letter-spacing="1" fill="{MUTED}">THE LAST 12 MONTHS ON GITHUB</text>
-<text class="r" {d(.18)} x="38" y="94" font-family="{SERIF}" font-size="40" fill="{INK}">{s["total"]:,} <tspan font-style="italic">contributions</tspan></text>
-<g class="r" {d(.32)}>
-  <text x="666" y="92" font-family="{SERIF}" font-size="32" fill="{BLUE}">{s["active"]} <tspan font-style="italic">days</tspan></text>
-  <text x="666" y="112" font-family="{SANS}" font-size="12.5" fill="{MUTED}">active in the last year</text>
-</g>
-{''.join(bars)}
-'''
-    save("activity-v4.svg", svg(W,h,body,f'{s["total"]} GitHub contributions'))
 
 def tile(filename, kicker, line1, line2, blurb, bg, fg, pos, start, arrow=False):
     lines = wrap(blurb, 35)[:3]
@@ -307,14 +224,7 @@ def project_card(filename, title, desc, tech, color, pos, status, cols=3):
     save(filename, svg(cw,ch,body,f"{status}: {title}",left=left,right=right))
 
 def main():
-    try:
-        data = fetch_contributions()
-    except Exception as exc:
-        print(f"Contribution fetch failed: {exc}")
-        data = None
-
     hero()
-    activity(stats(data))
     tile("academic-v4.svg","ISEP","Academic","Projects",
          "Group projects from my degree, where I learned the fundamentals.",
          BLUE,"#ffffff",0,.35,arrow=True)
