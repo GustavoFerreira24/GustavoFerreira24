@@ -50,7 +50,7 @@
   <rect class="p" style="animation-delay:0.52s" x="24" y="28" width="8" height="8" rx="2" fill="#315BFF"/>
   <text x="40" y="37" font-family="'SFMono-Regular', Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="10.5" letter-spacing=".8" fill="#77736b">COMPLETED</text>
   <text x="24" y="75" font-family="'Avenir Next', Avenir, 'Segoe UI', Helvetica, Arial, sans-serif" font-weight="700" font-size="19" fill="#111111">Weather Data Pipeline</text>
-  <text x="24" y="107" font-family="'Avenir Next', Avenir, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#44413c">ETL pipeline for hourly weather in Porto, Lisbon and</text><text x="24" y="127" font-family="'Avenir Next', Avenir, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#44413c">Madrid: raw JSON to validated Parquet to SQL analytics.</text>
+  <text x="24" y="107" font-family="'Avenir Next', Avenir, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#44413c">A first look at data engineering: hourly weather for</text><text x="24" y="127" font-family="'Avenir Next', Avenir, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#44413c">Porto, Lisbon and Madrid, cleaned and queried with DuckDB.</text>
   <line x1="24" y1="154" x2="410.0" y2="154" stroke="#d8d2c7" stroke-width="1"/>
   <text x="24" y="174" font-family="'SFMono-Regular', Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="11.5" fill="#77736b">Python · pandas · Parquet · DuckDB · pytest</text>
 </g>

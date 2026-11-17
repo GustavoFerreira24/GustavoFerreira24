@@ -50,7 +50,7 @@
   <rect class="p" style="animation-delay:0.76s" x="24" y="28" width="8" height="8" rx="2" fill="#FFD13B"/>
   <text x="40" y="37" font-family="'SFMono-Regular', Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="10.5" letter-spacing=".8" fill="#77736b">UPCOMING HACKATHON</text>
   <text x="24" y="75" font-family="'Avenir Next', Avenir, 'Segoe UI', Helvetica, Arial, sans-serif" font-weight="700" font-size="19" fill="#111111">Smart Aveiro</text>
-  <text x="24" y="107" font-family="'Avenir Next', Avenir, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#44413c">Smart-city challenge turning urban</text><text x="24" y="127" font-family="'Avenir Next', Avenir, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#44413c">mobility data into useful insights</text><text x="24" y="147" font-family="'Avenir Next', Avenir, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#44413c">for the city.</text>
+  <text x="24" y="107" font-family="'Avenir Next', Avenir, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#44413c">Hackathon challenge on urban</text><text x="24" y="127" font-family="'Avenir Next', Avenir, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#44413c">mobility data in Aveiro.</text>
   <line x1="24" y1="171" x2="261.3333333333333" y2="171" stroke="#d8d2c7" stroke-width="1"/>
   <text x="24" y="191" font-family="'SFMono-Regular', Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="11.5" fill="#77736b">Data · Analytics · Hackathon</text>
 </g>

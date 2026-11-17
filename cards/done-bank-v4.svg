@@ -50,7 +50,7 @@
   <rect class="p" style="animation-delay:0.64s" x="24" y="28" width="8" height="8" rx="2" fill="#FF4438"/>
   <text x="40" y="37" font-family="'SFMono-Regular', Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="10.5" letter-spacing=".8" fill="#77736b">COMPLETED</text>
   <text x="24" y="75" font-family="'Avenir Next', Avenir, 'Segoe UI', Helvetica, Arial, sans-serif" font-weight="700" font-size="19" fill="#111111">Bank Marketing ML</text>
-  <text x="24" y="107" font-family="'Avenir Next', Avenir, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#44413c">Predicts term-deposit subscriptions with leakage-aware</text><text x="24" y="127" font-family="'Avenir Next', Avenir, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#44413c">features, model benchmarking and threshold tuning.</text>
+  <text x="24" y="107" font-family="'Avenir Next', Avenir, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#44413c">A first ML project: predicting who subscribes to a term</text><text x="24" y="127" font-family="'Avenir Next', Avenir, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#44413c">deposit, using only what&#x27;s known before the call.</text>
   <line x1="24" y1="154" x2="410.0" y2="154" stroke="#d8d2c7" stroke-width="1"/>
   <text x="24" y="174" font-family="'SFMono-Regular', Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="11.5" fill="#77736b">Python · pandas · scikit-learn</text>
 </g>

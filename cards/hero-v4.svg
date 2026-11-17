@@ -65,7 +65,7 @@
 <text class="r" style="animation-delay:0.12s" x="44" y="184" font-family="'Iowan Old Style', 'Palatino Linotype', 'Book Antiqua', Palatino, Georgia, serif" font-size="104" letter-spacing="-2" fill="#111111">Gustavo</text>
 <text class="r" style="animation-delay:0.26s" x="44" y="282" font-family="'Iowan Old Style', 'Palatino Linotype', 'Book Antiqua', Palatino, Georgia, serif" font-style="italic" font-size="108" letter-spacing="-2" fill="url(#nameShine)">Ferreira</text>
 <g class="r" style="animation-delay:0.48s">
-  <text x="48" y="330" font-family="'Avenir Next', Avenir, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="18" fill="#44413c">Building practical projects across AI, Data Engineering and Cloud.</text>
+  <text x="48" y="330" font-family="'Avenir Next', Avenir, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="18" fill="#44413c">I build small projects to get a first feel for data, ML and cloud.</text>
 </g>
 <g class="f" style="animation-delay:0.66s">
   <circle class="live" cx="51" cy="382" r="6" fill="#31A354"/>

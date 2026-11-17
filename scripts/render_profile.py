@@ -186,7 +186,7 @@ def hero():
 <text class="r" {d(.12)} x="44" y="184" font-family="{SERIF}" font-size="104" letter-spacing="-2" fill="{INK}">Gustavo</text>
 <text class="r" {d(.26)} x="44" y="282" font-family="{SERIF}" font-style="italic" font-size="108" letter-spacing="-2" fill="url(#nameShine)">Ferreira</text>
 <g class="r" {d(.48)}>
-  <text x="48" y="330" font-family="{SANS}" font-size="18" fill="{INK_SOFT}">Building practical projects across AI, Data Engineering and Cloud.</text>
+  <text x="48" y="330" font-family="{SANS}" font-size="18" fill="{INK_SOFT}">I build small projects to get a first feel for data, ML and cloud.</text>
 </g>
 <g class="f" {d(.66)}>
   <circle class="live" cx="51" cy="382" r="6" fill="{GREEN}"/>
@@ -231,11 +231,6 @@ def activity(s):
 <g class="r" {d(.32)}>
   <text x="666" y="92" font-family="{SERIF}" font-size="32" fill="{BLUE}">{s["active"]} <tspan font-style="italic">days</tspan></text>
   <text x="666" y="112" font-family="{SANS}" font-size="12.5" fill="{MUTED}">active in the last year</text>
-  <rect x="666" y="128" width="170" height="1" fill="{RULE}"/>
-  <text x="666" y="156" font-family="{SERIF}" font-size="22" font-style="italic" fill="{INK}">Projects over</text>
-  <text x="666" y="180" font-family="{SERIF}" font-size="22" font-style="italic" fill="{INK}">streaks.</text>
-  <text x="666" y="201" font-family="{SANS}" font-size="11.5" fill="{MUTED}">The work matters more</text>
-  <text x="666" y="216" font-family="{SANS}" font-size="11.5" fill="{MUTED}">than the counter.</text>
 </g>
 {''.join(bars)}
 '''
@@ -320,14 +315,14 @@ def main():
 
     hero()
     activity(stats(data))
-    tile("academic-v4.svg","BUILD","Academic","Projects",
-         "Team engineering at ISEP across software, data, networking and systems.",
+    tile("academic-v4.svg","ISEP","Academic","Projects",
+         "Group projects from my degree, where I learned the fundamentals.",
          BLUE,"#ffffff",0,.35,arrow=True)
-    tile("personal-v4.svg","EXPLORE","Personal","Projects",
-         "Self-directed builds: data pipelines, ML models and study tools.",
+    tile("personal-v4.svg","PERSONAL PROJECTS","Personal","Projects",
+         "Small projects I did on my own to get a first feel for data and ML.",
          RED,"#ffffff",1,.48,arrow=True)
-    tile("focus-v4.svg","FOCUS","AI, Data","& Cloud",
-         "Career paths explored through real projects rather than theory alone.",
+    tile("focus-v4.svg","INTERESTED IN","AI, Data","& Cloud",
+         "Haven't picked one yet, and I'm keen to learn more in each.",
          YELLOW,INK,2,.61)
 
     for theme in ("dark", "light"):
@@ -341,13 +336,13 @@ def main():
                  "Restaurant management platform for catalogue, orders, stock and preparation workflows.",
                  "C# · .NET 8 · DDD",GREEN,1,"CURRENT PROJECT")
     project_card("current-hackathon-v4.svg","Smart Aveiro",
-                 "Smart-city challenge turning urban mobility data into useful insights for the city.",
+                 "Hackathon challenge on urban mobility data in Aveiro.",
                  "Data · Analytics · Hackathon",YELLOW,2,"UPCOMING HACKATHON")
     project_card("done-weather-v4.svg","Weather Data Pipeline",
-                 "ETL pipeline for hourly weather in Porto, Lisbon and Madrid: raw JSON to validated Parquet to SQL analytics.",
+                 "A first look at data engineering: hourly weather for Porto, Lisbon and Madrid, cleaned and queried with DuckDB.",
                  "Python · pandas · Parquet · DuckDB · pytest",BLUE,0,"COMPLETED",cols=2)
     project_card("done-bank-v4.svg","Bank Marketing ML",
-                 "Predicts term-deposit subscriptions with leakage-aware features, model benchmarking and threshold tuning.",
+                 "A first ML project: predicting who subscribes to a term deposit, using only what's known before the call.",
                  "Python · pandas · scikit-learn",RED,1,"COMPLETED",cols=2)
     print("Editorial profile cards rendered.")
 
