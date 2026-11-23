@@ -241,13 +241,10 @@ def main():
 
     project_card("current-ccna-v4.svg","CCNA AI Assistant",
                  "Study assistant that retrieves grounded answers from CCNA course materials.",
-                 "Python · RAG · Embeddings",BLUE,0,"CURRENT PROJECT")
+                 "Python · RAG · Embeddings",BLUE,0,"CURRENT PROJECT",cols=2)
     project_card("current-laprizza-v4.svg","LaPrizza",
                  "Restaurant management platform for catalogue, orders, stock and preparation workflows.",
-                 "C# · .NET 8 · DDD",GREEN,1,"CURRENT PROJECT")
-    project_card("current-hackathon-v4.svg","Smart Aveiro",
-                 "Hackathon challenge on urban mobility data in Aveiro.",
-                 "Data · Analytics · Hackathon",YELLOW,2,"UPCOMING HACKATHON")
+                 "C# · .NET 8 · DDD",GREEN,1,"CURRENT PROJECT",cols=2)
     project_card("done-weather-v4.svg","Weather Data Pipeline",
                  "A first look at data engineering: hourly weather for Porto, Lisbon and Madrid, cleaned and queried with DuckDB.",
                  "Python · pandas · Parquet · DuckDB · pytest",BLUE,0,"COMPLETED",cols=2)
